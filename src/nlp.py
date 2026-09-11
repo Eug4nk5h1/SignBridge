@@ -1,9 +1,7 @@
 import spacy
 
-
 # Load English NLP model
 nlp = spacy.load("en_core_web_sm")
-
 
 QUESTION_WORDS = [
     "who",
@@ -30,43 +28,62 @@ def analyze_sentence(sentence):
         "verb": None,
         "object": None,
         "location": None,
-        "time": None
+        "time": None,
+        "keywords": []
     }
 
-    # ----------------------------------------
-    # Sentence classification
-    # ----------------------------------------
+    # -----------------------------
+    # SENTENCE TYPE
+    # -----------------------------
 
     if sentence.strip().endswith("?"):
         result["sentence_type"] = "QUESTION"
 
-    # ----------------------------------------
-    # Analyze individual tokens
-    # ----------------------------------------
+    # -----------------------------
+    # EXTRACT KEYWORDS
+    # -----------------------------
 
     for token in doc:
 
-        # Question word
+        # Ignore punctuation
+        if token.is_punct:
+            continue
+
+        # Ignore auxiliary verbs and common grammatical words
+        if token.is_stop and token.text.lower() not in [
+            "i", "you", "he", "she", "we", "they"
+        ]:
+            continue
+
+        # Use lemma for verbs, original form for other words
+        if token.pos_ == "VERB":
+            word = token.lemma_.upper()
+        else:
+            word = token.text.upper()
+
+        result["keywords"].append(word)
+
+    # -----------------------------
+    # SENTENCE STRUCTURE
+    # -----------------------------
+
+    for token in doc:
+
         if token.text.lower() in QUESTION_WORDS:
             result["question_type"] = token.text.upper()
 
-        # Subject
         if token.dep_ in ["nsubj", "nsubjpass"]:
             result["subject"] = token.text.upper()
 
-        # Main verb
         if token.dep_ == "ROOT" and token.pos_ == "VERB":
             result["verb"] = token.lemma_.upper()
 
-        # Direct object
         if token.dep_ in ["dobj", "obj"]:
             result["object"] = token.text.upper()
 
-        # Object of preposition
         if token.dep_ == "pobj":
             result["location"] = token.text.upper()
 
-        # Time / date
         if token.ent_type_ in ["TIME", "DATE"]:
             result["time"] = token.text.upper()
 

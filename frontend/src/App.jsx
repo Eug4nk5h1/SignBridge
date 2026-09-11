@@ -1,122 +1,117 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { Mic } from "lucide-react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
+    <div className="app">
+
+      {/* Intro */}
+      <section className="intro-screen">
+
+        <div className="intro-symbol">
+          <span>🤟</span>
+        </div>
+
+        <div className="intro-title">
+          <h1>SIGNBRIDGE</h1>
+          <p>AI</p>
+        </div>
+
+        <div className="intro-line"></div>
+
+        <p className="intro-subtitle">
+          Speech → American Sign Language
+        </p>
+
+      </section>
+
+
+      {/* Main Page */}
+      <section className="home-screen">
+
+        <div className="top-bar">
+          <div className="brand">
+            <span className="brand-symbol">🤟</span>
+            <span>SignBridge</span>
+          </div>
+
+          <div className="system-status">
+            <span></span>
+            System ready
+          </div>
+        </div>
+
+
         <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+
+          <p className="eyebrow">
+            SPEECH TO SIGN LANGUAGE
           </p>
+
+          <h2>
+            Communication
+            <br />
+            <span>without barriers.</span>
+          </h2>
+
+          <p className="description">
+            Speak naturally in English.
+            <br />
+            SignBridge AI will transform your words
+            into American Sign Language.
+          </p>
+
+
+          {/* Microphone */}
+          <div className="mic-area">
+
+            <div className="pulse pulse-one"></div>
+            <div className="pulse pulse-two"></div>
+            <div className="pulse pulse-three"></div>
+
+            <button className="mic-button">
+              <Mic size={42} strokeWidth={1.8} />
+            </button>
+
+          </div>
+
+
+          <p className="speak-text">
+            TAP TO SPEAK
+          </p>
+
+          <p className="hint">
+            Your microphone will activate when you tap
+          </p>
+
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+
+
+        <div className="bottom-info">
+          <div>
+            <strong>01</strong>
+            <span>Speak</span>
+          </div>
+
+          <div className="bottom-line"></div>
+
+          <div>
+            <strong>02</strong>
+            <span>Understand</span>
+          </div>
+
+          <div className="bottom-line"></div>
+
+          <div>
+            <strong>03</strong>
+            <span>Sign</span>
+          </div>
+        </div>
+
       </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;

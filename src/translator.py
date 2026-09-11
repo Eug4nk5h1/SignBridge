@@ -1,4 +1,8 @@
 def translate_to_asl(analysis):
+    """
+    Convert the structured NLP analysis into
+    an ASL-oriented sign sequence.
+    """
 
     sentence_type = analysis["sentence_type"]
     question_type = analysis["question_type"]
@@ -11,12 +15,13 @@ def translate_to_asl(analysis):
 
     signs = []
 
-    # -------------------------
-    # QUESTIONS
-    # -------------------------
+    # ----------------------------------------
+    # WH-QUESTIONS
+    # ----------------------------------------
 
     if sentence_type == "QUESTION":
 
+        # Put the WH-question concept first
         if question_type:
             signs.append(question_type)
 
@@ -37,22 +42,27 @@ def translate_to_asl(analysis):
 
         return signs
 
-    # -------------------------
+    # ----------------------------------------
     # STATEMENTS
-    # -------------------------
+    # ----------------------------------------
 
+    # Time information first when available
     if time:
         signs.append(time)
 
+    # Subject
     if subject:
         signs.append(subject)
 
+    # Object
     if object_:
         signs.append(object_)
 
+    # Location
     if location:
         signs.append(location)
 
+    # Main action
     if verb:
         signs.append(verb)
 

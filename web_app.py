@@ -3,6 +3,7 @@ import streamlit as st
 from src.speech import record_audio, speech_to_text
 from src.nlp import analyze_sentence
 from src.translator import translate_to_asl
+from src.sign_library import get_sign
 
 
 st.set_page_config(
@@ -15,16 +16,21 @@ st.title("🤟 SignBridge AI")
 st.subheader("Speech → American Sign Language")
 
 st.write(
-    "Real-time speech-to-ASL translation using "
-    "speech recognition, NLP, and sign video generation."
+    "Translate spoken English into an ASL sign sequence "
+    "using speech recognition and NLP."
 )
 
 st.divider()
+
+# ----------------------------------------
+# SPEECH INPUT
+# ----------------------------------------
 
 st.header("🎤 Speech Input")
 
 if st.button("Start Speaking", use_container_width=True):
 
+    # Speech recognition
     with st.spinner("🎤 Listening..."):
         audio_file = record_audio()
 
@@ -33,14 +39,49 @@ if st.button("Start Speaking", use_container_width=True):
 
     st.success("Speech recognized!")
 
+    # ----------------------------------------
+    # RECOGNIZED SPEECH
+    # ----------------------------------------
+
     st.header("📝 Recognized Speech")
     st.write(text)
 
+    # ----------------------------------------
     # NLP
+    # ----------------------------------------
+
     analysis = analyze_sentence(text)
 
-    # ASL Translation
+    # ----------------------------------------
+    # ASL TRANSLATION
+    # ----------------------------------------
+
     sign_sequence = translate_to_asl(analysis)
 
     st.header("🤟 ASL Translation")
-    st.write(" → ".join(sign_sequence))
+
+    if sign_sequence:
+        st.write(" → ".join(sign_sequence))
+    else:
+        st.warning("No ASL signs were detected.")
+
+    # ----------------------------------------
+    # ASL VIDEO OUTPUT
+    # ----------------------------------------
+
+    st.header("🎥 ASL Sign Output")
+
+    for sign in sign_sequence:
+
+        video_path = get_sign(sign)
+
+        if video_path:
+            st.subheader(sign)
+
+            # Display video inside the webpage
+            st.video(str(video_path))
+
+        else:
+            st.warning(
+                f"No video available for: {sign}"
+            )

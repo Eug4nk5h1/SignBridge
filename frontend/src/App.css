@@ -1,0 +1,1542 @@
+/* ================================
+   GLOBAL
+================================ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #08090d;
+  color: #ffffff;
+}
+
+button {
+  font-family: inherit;
+}
+
+
+/* ================================
+   MAIN APP
+================================ */
+
+.app {
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  background:
+    radial-gradient(
+      circle at 50% 35%,
+      rgba(92, 84, 220, 0.22),
+      transparent 38%
+    ),
+    #08090d;
+}
+
+
+/* ================================
+   INTRO SCREEN
+================================ */
+
+.intro-screen {
+  position: fixed;
+  inset: 0;
+
+  z-index: 999;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: #08090d;
+
+  animation: introExit 0.8s ease forwards;
+  animation-delay: 3.8s;
+}
+
+.intro-hand {
+  font-size: 72px;
+
+  opacity: 0;
+
+  animation: introHand 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
+.intro-screen h1 {
+  margin-top: 25px;
+
+  font-size: 48px;
+  font-weight: 600;
+
+  letter-spacing: 9px;
+
+  opacity: 0;
+
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.8s;
+}
+
+.intro-ai {
+  margin-top: 8px;
+
+  font-size: 13px;
+
+  letter-spacing: 5px;
+
+  color: #827cff;
+
+  opacity: 0;
+
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 1.3s;
+}
+
+.intro-divider {
+  width: 0;
+  height: 1px;
+
+  margin-top: 24px;
+
+  background: rgba(255, 255, 255, 0.4);
+
+  animation: dividerGrow 0.8s ease forwards;
+  animation-delay: 1.7s;
+}
+
+.intro-screen p {
+  margin-top: 18px;
+
+  font-size: 13px;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  opacity: 0;
+
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 2.1s;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+header {
+  width: 100%;
+  height: 74px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 45px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  font-size: 17px;
+}
+
+.brand span {
+  font-size: 21px;
+}
+
+.brand strong {
+  font-weight: 600;
+}
+
+.page-number {
+  font-size: 11px;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* ================================
+   COMMON PAGE
+================================ */
+
+.page,
+.understand-page,
+.output-page {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  flex: 1;
+
+  padding: 55px 35px 45px;
+
+  text-align: center;
+}
+
+.page-label {
+  margin-bottom: 18px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  color: #817cff;
+}
+
+.page h2,
+.understand-page h2,
+.output-page h2 {
+  font-size: 58px;
+
+  line-height: 1.05;
+
+  letter-spacing: -2px;
+
+  font-weight: 600;
+}
+
+.page h2 span,
+.understand-page h2 span,
+.output-page h2 span {
+  color: #7772ff;
+}
+
+.page-description {
+  width: 100%;
+  max-width: 650px;
+
+  margin: 20px auto 0;
+
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+
+/* ================================
+   MICROPHONE
+================================ */
+
+.mic-container {
+  position: relative;
+
+  width: 230px;
+  height: 230px;
+
+  margin: 45px auto 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-button {
+  position: relative;
+
+  z-index: 5;
+
+  width: 105px;
+  height: 105px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(
+    145deg,
+    #7772ff,
+    #514ccf
+  );
+
+  color: white;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 35px rgba(105, 98, 255, 0.4);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.mic-button:hover {
+  transform: scale(1.08);
+
+  box-shadow:
+    0 0 55px rgba(105, 98, 255, 0.55);
+}
+
+.ring {
+  position: absolute;
+
+  border: 1px solid rgba(120, 114, 255, 0.35);
+
+  border-radius: 50%;
+
+  animation: ringPulse 3s ease-out infinite;
+}
+
+.ring-one {
+  width: 125px;
+  height: 125px;
+}
+
+.ring-two {
+  width: 170px;
+  height: 170px;
+
+  animation-delay: 1s;
+}
+
+.ring-three {
+  width: 220px;
+  height: 220px;
+
+  animation-delay: 2s;
+}
+
+.mic-label {
+  margin-top: 10px;
+
+  font-size: 12px;
+
+  letter-spacing: 3px;
+}
+
+.small-text {
+  margin-top: 8px;
+
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* ================================
+   LISTENING
+================================ */
+
+.listening {
+  margin-top: 50px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+.listening-orb {
+  position: relative;
+
+  width: 130px;
+  height: 130px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #5c57df;
+
+  box-shadow:
+    0 0 70px rgba(92, 87, 223, 0.55);
+
+  animation: listeningPulse 1.4s ease-in-out infinite;
+}
+
+.sound-wave {
+  position: absolute;
+
+  border: 1px solid rgba(120, 114, 255, 0.35);
+
+  border-radius: 50%;
+
+  animation: soundWave 1.8s ease-out infinite;
+}
+
+.wave-one {
+  width: 150px;
+  height: 150px;
+}
+
+.wave-two {
+  width: 185px;
+  height: 185px;
+
+  animation-delay: 0.4s;
+}
+
+.wave-three {
+  width: 220px;
+  height: 220px;
+
+  animation-delay: 0.8s;
+}
+
+.listening h3 {
+  margin-top: 35px;
+
+  font-size: 13px;
+
+  letter-spacing: 4px;
+}
+
+.listening p {
+  margin-top: 8px;
+
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* ================================
+   AUDIO BARS
+================================ */
+
+.audio-bars {
+  height: 45px;
+
+  margin-top: 25px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.audio-bars span {
+  width: 4px;
+
+  border-radius: 4px;
+
+  background: #7772ff;
+
+  animation: audioBar 0.7s ease-in-out infinite alternate;
+}
+
+.audio-bars span:nth-child(1) {
+  height: 15px;
+}
+
+.audio-bars span:nth-child(2) {
+  height: 30px;
+  animation-delay: 0.1s;
+}
+
+.audio-bars span:nth-child(3) {
+  height: 20px;
+  animation-delay: 0.2s;
+}
+
+.audio-bars span:nth-child(4) {
+  height: 40px;
+  animation-delay: 0.3s;
+}
+
+.audio-bars span:nth-child(5) {
+  height: 24px;
+  animation-delay: 0.15s;
+}
+
+.audio-bars span:nth-child(6) {
+  height: 32px;
+  animation-delay: 0.25s;
+}
+
+.audio-bars span:nth-child(7) {
+  height: 17px;
+  animation-delay: 0.35s;
+}
+
+
+/* ================================
+   RECOGNIZED SPEECH
+================================ */
+
+.recognized {
+  width: 100%;
+  max-width: 720px;
+
+  margin: 50px auto 0;
+
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.recognized-label {
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.speech-box {
+  margin-top: 15px;
+
+  padding: 28px 35px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.035);
+
+  font-size: 22px;
+
+  line-height: 1.5;
+}
+
+.action-row {
+  margin-top: 25px;
+
+  display: flex;
+  justify-content: center;
+
+  gap: 12px;
+}
+
+
+/* ================================
+   BUTTONS
+================================ */
+
+.primary-button,
+.secondary-button {
+  border-radius: 10px;
+
+  padding: 13px 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.primary-button {
+  border: none;
+
+  background: #706aff;
+
+  color: white;
+
+  box-shadow:
+    0 10px 30px rgba(95, 90, 240, 0.2);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+
+  background: #7d78ff;
+}
+
+.secondary-button {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  background: rgba(255, 255, 255, 0.04);
+
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.secondary-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+/* ================================
+   PAGE 2
+================================ */
+
+.sentence-area {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 50px auto 0;
+}
+
+.sentence-label {
+  font-size: 10px;
+
+  letter-spacing: 3px;
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+
+/*
+  ONE SINGLE TRANSFORMATION AREA.
+
+  English words and ASL words are rendered
+  inside this same container.
+*/
+
+.word-container {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 110px;
+
+  margin-top: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  perspective: 900px;
+
+  transition:
+    transform 0.6s ease,
+    filter 0.6s ease;
+}
+
+
+/* ================================
+   WORD BASE
+================================ */
+
+.word {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 15px;
+
+  border-radius: 9px;
+
+  font-size: 16px;
+
+  transform-origin: center;
+
+  will-change:
+    transform,
+    opacity,
+    filter;
+
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(
+      0.2,
+      0.8,
+      0.2,
+      1
+    ),
+    filter 0.9s ease,
+    background 0.6s ease,
+    border-color 0.6s ease,
+    color 0.6s ease,
+    box-shadow 0.6s ease;
+}
+
+
+/* ================================
+   STAGE 1
+   ORIGINAL ENGLISH
+================================ */
+
+.word-english {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    scale(1);
+
+  filter: blur(0);
+
+  background:
+    rgba(255, 255, 255, 0.06);
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.08);
+
+  color: rgba(255, 255, 255, 0.9);
+}
+
+
+/* ================================
+   STAGE 2
+   FILTERING
+================================ */
+
+/*
+  Meaningful words stay.
+*/
+
+.word-filtering.word-meaningful {
+  opacity: 1;
+
+  transform:
+    translateY(0)
+    scale(1.03);
+
+  filter: blur(0);
+
+  background:
+    rgba(119, 114, 255, 0.12);
+
+  border: 1px solid
+    rgba(119, 114, 255, 0.35);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 0 25px
+    rgba(119, 114, 255, 0.08);
+}
+
+
+/*
+  Support words dissolve.
+
+  They:
+  - move upward
+  - shrink
+  - blur
+  - fade
+*/
+
+.word-filtering.word-support {
+  opacity: 0;
+
+  transform:
+    translateY(-30px)
+    scale(0.55)
+    rotateX(55deg);
+
+  filter:
+    blur(10px);
+
+  background:
+    rgba(255, 255, 255, 0);
+
+  border-color:
+    rgba(255, 255, 255, 0);
+
+  color:
+    rgba(255, 255, 255, 0);
+
+  box-shadow: none;
+
+  pointer-events: none;
+}
+
+
+/* ================================
+   STAGE 3
+   ASL REPRESENTATION
+================================ */
+
+.word-asl {
+  position: relative;
+
+  opacity: 0;
+
+  padding: 11px 17px;
+
+  color: #9a96ff;
+
+  background:
+    rgba(119, 114, 255, 0.12);
+
+  border:
+    1px solid
+    rgba(119, 114, 255, 0.3);
+
+  box-shadow:
+    0 0 25px
+    rgba(119, 114, 255, 0.08);
+
+  transform:
+    translateY(25px)
+    scale(0.65);
+
+  filter:
+    blur(8px);
+
+  animation:
+    aslTransformIn
+    0.75s
+    cubic-bezier(
+      0.2,
+      0.8,
+      0.2,
+      1
+    )
+    forwards;
+}
+
+
+/*
+  Small glow underneath ASL words.
+*/
+
+.word-asl::after {
+  content: "";
+
+  position: absolute;
+
+  left: 20%;
+  right: 20%;
+
+  bottom: 4px;
+
+  height: 1px;
+
+  background:
+    rgba(140, 136, 255, 0.7);
+
+  opacity: 0.5;
+}
+
+
+/* ================================
+   ASL WORD TRANSFORMATION
+================================ */
+
+@keyframes aslTransformIn {
+
+  0% {
+    opacity: 0;
+
+    transform:
+      translateY(28px)
+      scale(0.6);
+
+    filter:
+      blur(9px);
+  }
+
+  35% {
+    opacity: 0.65;
+
+    transform:
+      translateY(8px)
+      scale(0.9);
+
+    filter:
+      blur(3px);
+  }
+
+  55% {
+    opacity: 1;
+
+    transform:
+      translateY(-7px)
+      scale(1.08);
+
+    filter:
+      blur(0);
+  }
+
+  75% {
+    transform:
+      translateY(2px)
+      scale(0.98);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+
+    filter:
+      blur(0);
+  }
+}
+
+
+/* ================================
+   TRANSFORMATION CONTAINER
+================================ */
+
+.transformation-stage-english {
+  animation:
+    sentenceGlow
+    1.2s
+    ease-in-out;
+}
+
+.transformation-stage-filtering {
+  animation:
+    filteringGlow
+    1.2s
+    ease-in-out;
+}
+
+.transformation-stage-asl {
+  animation:
+    aslContainerAppear
+    0.8s
+    ease
+    forwards;
+}
+
+
+/* ================================
+   STAGE ANIMATIONS
+================================ */
+
+@keyframes sentenceGlow {
+
+  0% {
+    opacity: 0.75;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+
+@keyframes filteringGlow {
+
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.015);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+@keyframes aslContainerAppear {
+
+  0% {
+    transform:
+      scale(0.97);
+
+    filter:
+      blur(3px);
+  }
+
+  100% {
+    transform:
+      scale(1);
+
+    filter:
+      blur(0);
+  }
+}
+
+
+/* ================================
+   TRANSFORMATION LINE
+================================ */
+
+.transformation-line {
+  width: 100%;
+  max-width: 700px;
+
+  margin: 40px auto 30px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+}
+
+.transformation-line div {
+  flex: 1;
+
+  height: 1px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+}
+
+.transformation-line span {
+  font-size: 9px;
+
+  letter-spacing: 3px;
+
+  color: #7772ff;
+
+  white-space: nowrap;
+}
+
+
+/* ================================
+   CONTINUE BUTTON
+================================ */
+
+.continue-understanding {
+  margin-top: 35px;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.3s ease,
+    background 0.2s ease;
+}
+
+.continue-understanding:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+
+/* ================================
+   PAGE 3
+================================ */
+
+.output-page {
+  max-width: 1250px;
+}
+
+.video-sequence {
+  width: 100%;
+
+  margin-top: 45px;
+
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 20px;
+
+  overflow-x: auto;
+
+  padding: 5px 5px 20px;
+}
+
+.video-card {
+  position: relative;
+
+  width: 245px;
+
+  min-width: 245px;
+
+  padding: 10px;
+
+  border-radius: 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.035);
+
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.video-card video {
+  display: block;
+
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  object-fit: contain;
+
+  border-radius: 9px;
+
+  background: #000;
+}
+
+.video-word {
+  margin-bottom: 9px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.video-active {
+  transform: translateY(-7px);
+
+  border-color:
+    rgba(119, 114, 255, 0.8);
+
+  box-shadow:
+    0 15px 40px
+    rgba(91, 86, 230, 0.25);
+}
+
+.playing-indicator {
+  position: absolute;
+
+  bottom: 17px;
+  left: 17px;
+
+  padding: 5px 8px;
+
+  border-radius: 6px;
+
+  background:
+    rgba(0, 0, 0, 0.75);
+
+  font-size: 8px;
+
+  letter-spacing: 1px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.playing-indicator span {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: #7772ff;
+}
+
+.output-actions {
+  margin-top: 35px;
+
+  display: flex;
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+}
+
+.start-asl {
+  min-width: 145px;
+}
+
+.playing-status {
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  border:
+    1px solid
+    rgba(112, 106, 255, 0.2);
+
+  background:
+    rgba(112, 106, 255, 0.1);
+
+  color: #9a96ff;
+
+  font-size: 12px;
+}
+
+.status-dot {
+  display: inline-block;
+
+  width: 6px;
+  height: 6px;
+
+  margin-right: 7px;
+
+  border-radius: 50%;
+
+  background: #7772ff;
+}
+
+.output-complete {
+  margin-top: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.3);
+
+  font-size: 11px;
+}
+
+
+/* ================================
+   MISSING VIDEO
+================================ */
+
+.no-video {
+  width: 100%;
+
+  aspect-ratio: 16 / 9;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  border:
+    1px dashed
+    rgba(255, 255, 255, 0.2);
+
+  border-radius: 12px;
+
+  background:
+    rgba(255, 255, 255, 0.03);
+
+  padding: 20px;
+}
+
+.no-video-icon {
+  font-size: 30px;
+
+  margin-bottom: 10px;
+
+  opacity: 0.7;
+}
+
+.no-video p {
+  margin: 0;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.no-video small {
+  margin-top: 6px;
+
+  opacity: 0.5;
+
+  font-size: 11px;
+}
+
+.video-missing {
+  opacity: 0.8;
+}
+
+
+/* ================================
+   BOTTOM STEPS
+================================ */
+
+.steps {
+  width: 100%;
+  height: 80px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 18px;
+
+  border-top:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color:
+    rgba(255, 255, 255, 0.25);
+}
+
+.step b {
+  font-size: 10px;
+}
+
+.step span {
+  font-size: 10px;
+}
+
+.step.active {
+  color: white;
+}
+
+.step.active b {
+  color: #7772ff;
+}
+
+.step-line {
+  width: 55px;
+  height: 1px;
+
+  background:
+    rgba(255, 255, 255, 0.08);
+}
+
+
+/* ================================
+   GENERAL ANIMATIONS
+================================ */
+
+@keyframes introHand {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.5)
+      translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+}
+
+
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+@keyframes dividerGrow {
+
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 180px;
+  }
+}
+
+
+@keyframes introExit {
+
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+
+    visibility: hidden;
+  }
+}
+
+
+@keyframes ringPulse {
+
+  0% {
+    transform: scale(0.65);
+
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: scale(1.2);
+
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.2);
+
+    opacity: 0;
+  }
+}
+
+
+@keyframes listeningPulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+}
+
+
+@keyframes soundWave {
+
+  0% {
+    transform: scale(0.7);
+
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1.3);
+
+    opacity: 0;
+  }
+}
+
+
+@keyframes audioBar {
+
+  from {
+    transform: scaleY(0.5);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+  .page h2,
+  .understand-page h2,
+  .output-page h2 {
+    font-size: 45px;
+  }
+
+  .video-sequence {
+    justify-content: flex-start;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  header {
+    padding: 0 20px;
+  }
+
+  .page,
+  .understand-page,
+  .output-page {
+    padding: 40px 20px;
+  }
+
+  .page h2,
+  .understand-page h2,
+  .output-page h2 {
+    font-size: 36px;
+  }
+
+  .action-row {
+    flex-direction: column;
+  }
+
+  .steps {
+    gap: 8px;
+  }
+
+  .step-line {
+    width: 25px;
+  }
+
+  .video-card {
+    width: 220px;
+
+    min-width: 220px;
+  }
+
+  .word-container {
+    gap: 8px;
+  }
+
+  .word {
+    padding: 8px 11px;
+
+    font-size: 14px;
+  }
+}
+
+
+/* ================================
+   ACCESSIBILITY
+================================ */
+
+button:focus-visible {
+  outline: 2px solid #7772ff;
+
+  outline-offset: 3px;
+}

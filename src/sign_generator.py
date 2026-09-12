@@ -58,7 +58,7 @@ def play_sign_sequence(sign_sequence, display_window=False):
                     ret, frame = cap.read()
                     if not ret:
                         break
-                    cv2.imshow("SignBridge - ISL Playback", frame)
+                    cv2.imshow("SignBridge - ASL Playback", frame)
                     if cv2.waitKey(25) & 0xFF == ord('q'):
                         cap.release()
                         cv2.destroyAllWindows()

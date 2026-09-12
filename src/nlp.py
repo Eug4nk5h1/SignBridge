@@ -32,16 +32,10 @@ def analyze_sentence(sentence):
         "keywords": []
     }
 
-    # -----------------------------
-    # SENTENCE TYPE
-    # -----------------------------
 
     if sentence.strip().endswith("?"):
         result["sentence_type"] = "QUESTION"
 
-    # -----------------------------
-    # EXTRACT KEYWORDS
-    # -----------------------------
 
     for token in doc:
 
@@ -63,9 +57,6 @@ def analyze_sentence(sentence):
 
         result["keywords"].append(word)
 
-    # -----------------------------
-    # SENTENCE STRUCTURE
-    # -----------------------------
 
     for token in doc:
 

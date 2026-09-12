@@ -7,10 +7,10 @@ function App() {
   return (
     <div className="app">
 
-      {/* Navigation */}
+      {/* NAVIGATION */}
       <nav className="navbar">
         <a href="#home" className="brand">
-          <div className="brand-icon">🤟</div>
+          <span className="brand-mark">S</span>
           <span>SignBridge</span>
         </a>
 
@@ -21,7 +21,7 @@ function App() {
         </div>
 
         <a href="#get-started" className="nav-button">
-          Get Started
+          Try it
         </a>
       </nav>
 
@@ -29,91 +29,80 @@ function App() {
       {/* HOME */}
       <main>
 
-        <section className="hero-section" id="home">
+        <section className="home" id="home">
 
-          <div className="hero-content">
+          <div className="home-left">
 
-            <div className="tag">
-              <span>●</span> AMERICAN SIGN LANGUAGE
+            <div className="eyebrow">
+              AMERICAN SIGN LANGUAGE
             </div>
 
             <h1>
-              Breaking barriers,
+              Speak naturally.
               <br />
-              <span>one sign at a time.</span>
+              <em>See it in sign.</em>
             </h1>
 
-            <p>
-              SignBridge transforms spoken words into American Sign
-              Language, helping create more accessible and inclusive
-              communication for everyone.
+            <p className="intro">
+              SignBridge helps bridge communication by turning
+              spoken language into American Sign Language,
+              one sentence at a time.
             </p>
 
-            <div className="hero-actions">
-
-              <a
-                href="#get-started"
-                className="primary-button"
-              >
-                <span className="mic-icon">🎙</span>
-                Start Translating
+            <div className="home-buttons">
+              <a href="#get-started" className="main-button">
+                Start translating
+                <span>→</span>
               </a>
 
-              <a href="#about" className="secondary-button">
-                Learn More <span>→</span>
+              <a href="#about" className="text-button">
+                How it works
               </a>
+            </div>
 
+            <div className="small-note">
+              No account required · Simple to use
             </div>
 
           </div>
 
 
-          {/* Hero visual */}
+          <div className="home-right">
 
-          <div className="hero-visual">
+            <div className="paper-card">
 
-            <div className="visual-glow"></div>
-
-            <div className="sign-card main-card">
-
-              <div className="card-label">
-                ASL TRANSLATION
+              <div className="card-heading">
+                <span>LIVE TRANSLATION</span>
+                <span className="live-dot"></span>
               </div>
 
-              <div className="sign-placeholder">
-                <span>🤟</span>
+              <div className="example-text">
+                <span className="quotation">“</span>
+
+                <p>
+                  Hello, how are you?
+                </p>
               </div>
 
-              <div className="card-word">
-                HELLO
+              <div className="divider"></div>
+
+              <div className="sign-preview">
+
+                <div className="hand-illustration">
+                  <span>🤟</span>
+                </div>
+
+                <div>
+                  <small>AMERICAN SIGN LANGUAGE</small>
+                  <strong>HELLO</strong>
+                </div>
+
               </div>
 
-              <div className="card-caption">
-                American Sign Language
-              </div>
-
-            </div>
-
-
-            <div className="floating-card top-card">
-
-              <span className="floating-icon">🎙</span>
-
-              <div>
-                <strong>Speech detected</strong>
-                <small>Ready to translate</small>
-              </div>
-
-            </div>
-
-
-            <div className="floating-card bottom-card">
-
-              <span>✓</span>
-
-              <div>
-                <strong>Real-time</strong>
-                <small>Translation</small>
+              <div className="card-footer">
+                <span>Speech</span>
+                <span>→</span>
+                <span>ASL</span>
               </div>
 
             </div>
@@ -124,117 +113,101 @@ function App() {
 
 
         {/* GET STARTED */}
+        <section className="translator" id="get-started">
 
-        <section className="translator-section" id="get-started">
-
-          <div className="translator-header">
+          <div className="section-intro">
 
             <div>
-
-              <div className="tag">
+              <div className="eyebrow">
                 GET STARTED
               </div>
 
               <h2>
-                Your words.
-                <br />
-                Their language.
+                Let's translate.
               </h2>
-
             </div>
 
             <p>
-              Speak naturally and let SignBridge convert your
-              speech into American Sign Language.
+              Press the microphone and speak your sentence.
+              Your translation will appear on the right.
             </p>
 
           </div>
 
 
-          <div className="translator-box">
+          <div className="translator-workspace">
 
-            {/* Speech input */}
+            {/* INPUT */}
 
-            <div className="input-panel">
+            <div className="workspace-panel">
 
-              <div className="panel-top">
-
-                <span>
-                  YOUR SPEECH
+              <div className="workspace-label">
+                <span>YOUR SPEECH</span>
+                <span className="ready">
+                  <i></i>
+                  {isListening ? 'Listening' : 'Ready'}
                 </span>
-
-                <span className="status">
-                  <i></i> Ready
-                </span>
-
               </div>
 
+              <div className="speech-content">
 
-              <div className="speech-area">
-
-                <span className="quote">
+                <span className="large-quote">
                   “
                 </span>
 
-                <p>
-                  Your spoken words will appear here...
+                <p className="placeholder-text">
+                  {isListening
+                    ? 'Listening for your voice...'
+                    : 'Your spoken words will appear here.'}
                 </p>
 
               </div>
 
-
               <button
-                className={`listen-button ${isListening ? 'active' : ''}`}
+                className={`record-button ${isListening ? 'recording' : ''}`}
                 onClick={() => setIsListening(!isListening)}
               >
+                <span className="record-circle">
+                  {isListening ? '■' : '●'}
+                </span>
 
-                🎙
                 {isListening
-                  ? ' Stop listening'
-                  : ' Start speaking'}
-
+                  ? 'Stop listening'
+                  : 'Start speaking'}
               </button>
 
             </div>
 
 
-            <div className="translation-arrow">
+            <div className="workspace-arrow">
               →
             </div>
 
 
-            {/* ASL output */}
+            {/* OUTPUT */}
 
-            <div className="output-panel">
+            <div className="workspace-panel output">
 
-              <div className="panel-top">
-
-                <span>
-                  AMERICAN SIGN LANGUAGE
-                </span>
-
-                <span className="isl-badge">
-                  ASL
-                </span>
-
+              <div className="workspace-label">
+                <span>ASL TRANSLATION</span>
+                <span className="asl-label">ASL</span>
               </div>
 
+              <div className="sign-video">
 
-              <div className="video-placeholder">
+                <div className="video-inner">
+                  <span>🤟</span>
 
-                <div className="video-sign">
-                  🤟
+                  <button className="video-play">
+                    ▶
+                  </button>
                 </div>
 
-                <button className="play-button">
-                  ▶
-                </button>
-
               </div>
 
-
-              <div className="sign-word">
-                YOUR SIGN WILL APPEAR HERE
+              <div className="translation-caption">
+                <small>TRANSLATED SIGN</small>
+                <strong>Waiting for speech...</strong>
               </div>
 
             </div>
@@ -246,86 +219,54 @@ function App() {
 
         {/* HOW IT WORKS */}
 
-        <section className="features-section">
+        <section className="how-section">
 
-          <div className="section-heading">
-
-            <div className="tag">
-              HOW IT WORKS
-            </div>
-
-            <h2>
-              Simple. Fast. Accessible.
-            </h2>
-
+          <div className="eyebrow">
+            HOW IT WORKS
           </div>
 
+          <h2>
+            Three simple steps.
+          </h2>
 
-          <div className="features-grid">
+          <div className="steps">
 
-            <div className="feature-card">
+            <div className="step">
+              <span className="step-number">01</span>
 
-              <div className="feature-number">
-                01
+              <div>
+                <h3>Speak</h3>
+                <p>
+                  Use your microphone to say whatever
+                  you want to communicate.
+                </p>
               </div>
-
-              <div className="feature-icon">
-                🎙️
-              </div>
-
-              <h3>
-                Speak
-              </h3>
-
-              <p>
-                Speak naturally into your microphone. Your voice
-                is captured and converted into text.
-              </p>
-
             </div>
 
 
-            <div className="feature-card">
+            <div className="step">
+              <span className="step-number">02</span>
 
-              <div className="feature-number">
-                02
+              <div>
+                <h3>Process</h3>
+                <p>
+                  Your speech is converted into text and
+                  processed by the translation system.
+                </p>
               </div>
-
-              <div className="feature-icon">
-                ✦
-              </div>
-
-              <h3>
-                Translate
-              </h3>
-
-              <p>
-                The system processes your words and maps them
-                to the corresponding American Sign Language signs.
-              </p>
-
             </div>
 
 
-            <div className="feature-card">
+            <div className="step">
+              <span className="step-number">03</span>
 
-              <div className="feature-number">
-                03
+              <div>
+                <h3>Sign</h3>
+                <p>
+                  The corresponding American Sign Language
+                  signs are displayed for you.
+                </p>
               </div>
-
-              <div className="feature-icon">
-                🤟
-              </div>
-
-              <h3>
-                See the Sign
-              </h3>
-
-              <p>
-                Watch the corresponding ASL sign demonstrations
-                displayed clearly on your screen.
-              </p>
-
             </div>
 
           </div>
@@ -335,24 +276,30 @@ function App() {
 
         {/* ABOUT */}
 
-        <section className="about-section" id="about">
+        <section className="about" id="about">
 
-          <div className="about-content">
+          <div className="about-heading">
 
-            <div className="tag">
+            <div className="eyebrow">
               ABOUT SIGNBRIDGE
             </div>
 
             <h2>
-              Technology that
+              Technology should
               <br />
-              <span>connects people.</span>
+              <em>bring people closer.</em>
             </h2>
 
+          </div>
+
+
+          <div className="about-text">
+
             <p>
-              SignBridge is a speech-to-sign language platform
-              designed to make everyday communication more
-              accessible.
+              Communication can become difficult when people
+              use different languages or communication methods.
+              SignBridge explores how technology can help make
+              that gap a little smaller.
             </p>
 
             <p>
@@ -362,23 +309,11 @@ function App() {
               visual demonstrations.
             </p>
 
-          </div>
+            <div className="about-line"></div>
 
-
-          <div className="about-card">
-
-            <div className="about-card-icon">
-              🤝
-            </div>
-
-            <h3>
-              Our Goal
-            </h3>
-
-            <p>
-              To reduce communication barriers and create a
-              more inclusive environment through technology.
-            </p>
+            <span>
+              Built as a project with accessibility in mind.
+            </span>
 
           </div>
 
@@ -387,28 +322,23 @@ function App() {
 
         {/* FINAL CTA */}
 
-        <section className="cta-section">
+        <section className="final-section">
 
-          <div className="cta-content">
+          <div className="final-inner">
 
-            <div className="tag">
-              COMMUNICATION FOR EVERYONE
+            <div>
+              <div className="eyebrow">
+                SIGNBRIDGE
+              </div>
+
+              <h2>
+                Ready to give it a try?
+              </h2>
             </div>
 
-            <h2>
-              Ready to get started?
-            </h2>
-
-            <p>
-              Speak your message and let SignBridge turn your
-              words into American Sign Language.
-            </p>
-
-            <a
-              href="#get-started"
-              className="primary-button"
-            >
-              Start Translating <span>→</span>
+            <a href="#get-started" className="main-button">
+              Start translating
+              <span>→</span>
             </a>
 
           </div>
@@ -423,23 +353,16 @@ function App() {
       <footer>
 
         <div className="brand">
-
-          <div className="brand-icon">
-            🤟
-          </div>
-
-          <span>
-            SignBridge
-          </span>
-
+          <span className="brand-mark">S</span>
+          <span>SignBridge</span>
         </div>
 
-        <p>
-          Bridging communication through American Sign Language.
-        </p>
+        <span>
+          Speech → American Sign Language
+        </span>
 
-        <span className="copyright">
-          © 2026 SignBridge
+        <span>
+          © 2026
         </span>
 
       </footer>

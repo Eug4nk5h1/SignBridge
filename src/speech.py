@@ -40,7 +40,11 @@ def speech_to_text(audio_file):
 
     model = whisper.load_model("base")
 
-    result = model.transcribe(audio_file)
+    result = model.transcribe(
+        audio_file,
+        language="en",
+        task="transcribe"
+    )
 
     text = result["text"].strip()
 

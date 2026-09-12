@@ -32,15 +32,18 @@ function App() {
   const [understandingWords, setUnderstandingWords] =
     useState([]);
 
-  const [playingIndex, setPlayingIndex] = useState(-1);
   const [sequencePlaying, setSequencePlaying] = useState(false);
+
+  const [currentSignIndex, setCurrentSignIndex] = useState(0);
+
+  const singleVideoRef = useRef(null);
+  const sequenceTimerRef = useRef(null);
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
-  const videoRefs = useRef([]);
-
   const animationTimersRef = useRef([]);
+  const [videoTransitioning, setVideoTransitioning] = useState(false);
 
   /* =========================
      INTRO
@@ -308,101 +311,95 @@ function App() {
     return translationData.signs || [];
   };
 
+  const getPlayableSigns = () => {
+    return getAvailableSigns().filter(
+      (sign) => sign.found && sign.video
+    );
+  };
+
   const startASL = () => {
-    if (sequencePlaying) return;
+    const available = getPlayableSigns();
 
-    const signs = getAvailableSigns();
-
-    const firstAvailableIndex =
-      signs.findIndex(
-        (sign) => sign.found && sign.video
-      );
-
-    if (firstAvailableIndex === -1) {
+    if (available.length === 0) {
       return;
     }
 
+    setCurrentSignIndex(0);
     setSequencePlaying(true);
-    setPlayingIndex(firstAvailableIndex);
-
-    const video =
-      videoRefs.current[firstAvailableIndex];
-
-    if (video) {
-      video.currentTime = 0;
-
-      video.play().catch((error) => {
-        console.error(
-          "Video playback failed:",
-          error
-        );
-      });
-    }
   };
 
-  const handleVideoEnded = (index) => {
-    const signs = getAvailableSigns();
+  const handleVideoEnded = () => {
+    const available = getPlayableSigns();
 
-    /*
-      Find the next available video.
-      Missing videos are skipped.
-    */
-    let nextIndex = -1;
+    const nextIndex = currentSignIndex + 1;
 
-    for (
-      let i = index + 1;
-      i < signs.length;
-      i++
-    ) {
-      if (
-        signs[i].found &&
-        signs[i].video
-      ) {
-        nextIndex = i;
-        break;
+    if (nextIndex < available.length) {
+      if (sequenceTimerRef.current) {
+        clearTimeout(sequenceTimerRef.current);
       }
+
+      setVideoTransitioning(true);
+
+      sequenceTimerRef.current = setTimeout(() => {
+        setCurrentSignIndex(nextIndex);
+        setVideoTransitioning(false);
+      }, 350);
+
+      return;
     }
 
-    if (nextIndex !== -1) {
-      setTimeout(() => {
-        setPlayingIndex(nextIndex);
-
-        const nextVideo =
-          videoRefs.current[nextIndex];
-
-        if (nextVideo) {
-          nextVideo.currentTime = 0;
-
-          nextVideo.play().catch(
-            (error) => {
-              console.error(
-                "Video playback failed:",
-                error
-              );
-            }
-          );
-        }
-      }, 600);
-    } else {
-      /*
-        Entire sequence finished.
-      */
-      setPlayingIndex(-1);
-      setSequencePlaying(false);
-    }
+    setSequencePlaying(false);
   };
+
+  useEffect(() => {
+    if (!sequencePlaying) {
+      return;
+    }
+
+    const available = getPlayableSigns();
+    const currentSign = available[currentSignIndex];
+
+    if (!currentSign) {
+      return;
+    }
+
+    const video = singleVideoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    video.src = `${BACKEND_URL}${currentSign.video}`;
+    video.load();
+
+    const playVideo = async () => {
+      try {
+        await video.play();
+      } catch (error) {
+        console.error("Video playback failed:", error);
+      }
+    };
+
+    playVideo();
+
+  }, [currentSignIndex, sequencePlaying]);
 
   const stopASL = () => {
-    videoRefs.current.forEach(
-      (video) => {
-        if (video) {
-          video.pause();
-        }
-      }
-    );
+    if (sequenceTimerRef.current) {
+      clearTimeout(sequenceTimerRef.current);
+      sequenceTimerRef.current = null;
+    }
 
-    setPlayingIndex(-1);
+    const video = singleVideoRef.current;
+
+    if (video) {
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    }
+
     setSequencePlaying(false);
+    setCurrentSignIndex(0);
   };
 
   const newTranslation = () => {
@@ -418,9 +415,7 @@ function App() {
     setScreen("speak");
   };
 
-  /* =========================
-     INTRO SCREEN
-  ========================= */
+  /* ==================== */
 
   if (screen === "intro") {
     return (
@@ -453,7 +448,7 @@ function App() {
     return (
       <div className="app">
 
-        <header>
+        <div className="page-top">
           <div className="brand">
             <span>🤟</span>
             <strong>SignBridge</strong>
@@ -462,7 +457,7 @@ function App() {
           <div className="page-number">
             01 / 03
           </div>
-        </header>
+        </div>
 
         <main className="page">
 
@@ -479,9 +474,9 @@ function App() {
           </h2>
 
           <p className="page-description">
-            Speak in English and SignBridge
-            will transform your speech into
-            American Sign Language.
+            {listening
+              ? "SignBridge is listening to you."
+              : "Speak in English and SignBridge will transform your speech into American Sign Language."}
           </p>
 
           {!recognizedText &&
@@ -515,23 +510,17 @@ function App() {
           {listening && (
             <div className="listening">
 
-              <div className="listening-orb">
-
+              <button
+                className="listening-orb"
+                onClick={stopListening}
+                aria-label="Stop recording"
+              >
                 <div className="sound-wave wave-one"></div>
                 <div className="sound-wave wave-two"></div>
                 <div className="sound-wave wave-three"></div>
 
                 <Mic size={34} />
-              </div>
-
-              <h3>
-                LISTENING...
-              </h3>
-
-              <p>
-                SignBridge is listening
-                to your speech.
-              </p>
+              </button>
 
               <div className="audio-bars">
                 <span></span>
@@ -542,17 +531,6 @@ function App() {
                 <span></span>
                 <span></span>
               </div>
-
-              <button
-                className="secondary-button"
-                onClick={stopListening}
-              >
-                <Square
-                  size={15}
-                  fill="currentColor"
-                />
-                Stop Listening
-              </button>
 
             </div>
           )}
@@ -632,7 +610,7 @@ function App() {
     return (
       <div className="app">
 
-        <header>
+        <div className="page-top">
           <div className="brand">
             <span>🤟</span>
             <strong>SignBridge</strong>
@@ -641,7 +619,7 @@ function App() {
           <div className="page-number">
             02 / 03
           </div>
-        </header>
+        </div>
 
         <main className="understand-page">
 
@@ -782,202 +760,278 @@ function App() {
     );
   }
 
-  /* =========================
-     PAGE 3
-     ASL OUTPUT
-  ========================= */
+/* =========================
+   PAGE 3
+   ASL OUTPUT
+========================= */
 
-  const signs = getAvailableSigns();
+const signs = getAvailableSigns();
 
-  return (
-    <div className="app">
+const availableSigns = signs.filter(
+  (sign) =>
+    sign.found &&
+    sign.video
+);
 
-      <header>
-        <div className="brand">
-          <span>🤟</span>
-          <strong>SignBridge</strong>
-        </div>
+const currentSign =
+  availableSigns[currentSignIndex];
 
-        <div className="page-number">
-          03 / 03
-        </div>
-      </header>
+return (
+  <div className="app">
 
-      <main className="output-page">
+    {/* =========================
+        TOP BAR
+    ========================= */}
 
-        <div className="page-label">
-          ASL OUTPUT
-        </div>
+    <div className="page-top">
 
-        <h2>
-          Your translation is
-          <br />
-          <span>ready.</span>
-        </h2>
+      <div className="brand">
 
-        <p className="page-description">
-          Follow the signs from left to right.
-        </p>
+        <span>🤟</span>
 
-        <div className="video-sequence">
+        <strong>
+          SignBridge
+        </strong>
 
-          {signs.map((sign, index) => (
+      </div>
 
-            <div
-              className={`video-card ${
-                playingIndex === index
-                  ? "video-active"
-                  : ""
-              } ${
-                !sign.found
-                  ? "video-missing"
-                  : ""
-              }`}
-              key={`${sign.word}-${index}`}
-            >
-
-              <div className="video-word">
-                {sign.word}
-              </div>
-
-              {sign.found &&
-              sign.video ? (
-                <video
-                  ref={(element) => {
-                    videoRefs.current[index] =
-                      element;
-                  }}
-                  src={`${BACKEND_URL}${sign.video}`}
-                  muted
-                  playsInline
-                  preload="metadata"
-                  onEnded={() =>
-                    handleVideoEnded(index)
-                  }
-                />
-              ) : (
-                <div className="no-video">
-
-                  <div className="no-video-icon">
-                    🎥
-                  </div>
-
-                  <p>
-                    No video available
-                  </p>
-
-                  <small>
-                    Working on it
-                  </small>
-
-                </div>
-              )}
-
-              {playingIndex === index && (
-                <div className="playing-indicator">
-                  <span></span>
-                  PLAYING
-                </div>
-              )}
-
-            </div>
-
-          ))}
-
-        </div>
-
-        <div className="output-actions">
-
-          {!sequencePlaying &&
-            playingIndex === -1 && (
-              <button
-                className="primary-button start-asl"
-                onClick={startASL}
-                disabled={
-                  !signs.some(
-                    (sign) =>
-                      sign.found &&
-                      sign.video
-                  )
-                }
-              >
-                <Play
-                  size={18}
-                  fill="currentColor"
-                />
-                Start ASL
-              </button>
-            )}
-
-          {sequencePlaying && (
-            <button
-              className="secondary-button"
-              onClick={stopASL}
-            >
-              <Square
-                size={16}
-                fill="currentColor"
-              />
-              Stop
-            </button>
-          )}
-
-          {!sequencePlaying &&
-            playingIndex === -1 && (
-              <button
-                className="secondary-button"
-                onClick={newTranslation}
-              >
-                <RotateCcw size={17} />
-                New Translation
-              </button>
-            )}
-
-          {sequencePlaying && (
-            <div className="playing-status">
-              <span className="status-dot"></span>
-              Playing ASL sequence...
-            </div>
-          )}
-
-        </div>
-
-        {!sequencePlaying &&
-          playingIndex === -1 && (
-            <div className="output-complete">
-              <Check size={16} />
-              Each sign plays once.
-              Press Start ASL again to replay.
-            </div>
-          )}
-
-      </main>
-
-      <footer className="steps">
-
-        <div className="step">
-          <b>01</b>
-          <span>Speak</span>
-        </div>
-
-        <div className="step-line"></div>
-
-        <div className="step">
-          <b>02</b>
-          <span>Understand</span>
-        </div>
-
-        <div className="step-line"></div>
-
-        <div className="step active">
-          <b>03</b>
-          <span>Sign</span>
-        </div>
-
-      </footer>
+      <div className="page-number">
+        03 / 03
+      </div>
 
     </div>
-  );
-}
 
+
+    {/* =========================
+        MAIN OUTPUT
+    ========================= */}
+
+    <main className="output-page">
+
+      <div className="page-label">
+        ASL OUTPUT
+      </div>
+
+
+      <h2>
+        Your translation is
+        <br />
+
+        <span>
+          ready.
+        </span>
+      </h2>
+
+      {/* =========================
+          SINGLE SIGN
+      ========================= */}
+
+      {currentSign && (
+
+        <div className="single-sign-view">
+
+
+          {/* CURRENT WORD */}
+
+        <div
+          className={`single-video-container ${
+            sequencePlaying ? "video-active" : ""
+          } ${videoTransitioning ? "video-transitioning" : ""}`}
+        >
+
+          <div className="video-side-label video-word">
+            {currentSign.word}
+          </div>
+
+          <div className="video-side-label video-progress">
+            SIGN {currentSignIndex + 1} / {availableSigns.length}
+          </div>
+
+            <video
+
+              ref={singleVideoRef}
+
+              src={`${BACKEND_URL}${currentSign.video}`}
+
+              muted
+
+              playsInline
+
+              preload="auto"
+
+              controls={false}
+
+              onEnded={
+                handleVideoEnded
+              }
+
+            />
+
+
+            {/* PLAYING INDICATOR */}
+
+            {sequencePlaying && (
+
+              <div className="playing-indicator">
+
+                <span></span>
+
+                PLAYING
+
+              </div>
+
+            )}
+
+          </div>
+
+        </div>
+
+      )}
+
+
+      {/* =========================
+          NO VIDEO
+      ========================= */}
+
+      {!currentSign && (
+
+        <div className="no-signs">
+
+          No ASL videos are currently
+          available.
+
+        </div>
+
+      )}
+
+
+      {/* =========================
+          BUTTONS
+      ========================= */}
+
+      <div className="output-actions">
+
+
+        {!sequencePlaying && (
+
+          <button
+
+            className="primary-button start-asl"
+
+            onClick={startASL}
+
+            disabled={
+              availableSigns.length === 0
+            }
+
+          >
+
+            <Play
+              size={18}
+              fill="currentColor"
+            />
+
+            Start ASL
+
+          </button>
+
+        )}
+
+
+        {sequencePlaying && (
+
+          <button
+
+            className="secondary-button"
+
+            onClick={stopASL}
+
+          >
+
+            <Square
+              size={16}
+              fill="currentColor"
+            />
+
+            Stop
+
+          </button>
+
+        )}
+
+
+        {!sequencePlaying && (
+
+          <button
+
+            className="secondary-button"
+
+            onClick={newTranslation}
+
+          >
+
+            <RotateCcw
+              size={17}
+            />
+
+            New Translation
+
+          </button>
+
+        )}
+
+      </div>
+
+    </main>
+
+
+    {/* =========================
+        BOTTOM STEPS
+    ========================= */}
+
+    <footer className="steps">
+
+      <div className="step">
+
+        <b>01</b>
+
+        <span>
+          Speak
+        </span>
+
+      </div>
+
+
+      <div className="step-line"></div>
+
+
+      <div className="step">
+
+        <b>02</b>
+
+        <span>
+          Understand
+        </span>
+
+      </div>
+
+
+      <div className="step-line"></div>
+
+
+      <div className="step active">
+
+        <b>03</b>
+
+        <span>
+          Sign
+        </span>
+
+      </div>
+
+    </footer>
+
+  </div>
+);
+}
 export default App;

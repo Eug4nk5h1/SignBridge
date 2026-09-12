@@ -12,7 +12,8 @@ html,
 body,
 #root {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -31,8 +32,10 @@ button {
 ================================ */
 
 .app {
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
+
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
@@ -81,7 +84,7 @@ button {
 }
 
 .intro-screen h1 {
-  margin-top: 25px;
+  margin-top: 50px;
 
   font-size: 48px;
   font-weight: 600;
@@ -141,9 +144,9 @@ button {
    HEADER
 ================================ */
 
-header {
+.page-top {
   width: 100%;
-  height: 74px;
+  height: 58px;
 
   flex-shrink: 0;
 
@@ -153,7 +156,7 @@ header {
 
   padding: 0 45px;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border: none;
 }
 
 .brand {
@@ -195,10 +198,12 @@ header {
   margin: 0 auto;
 
   flex: 1;
+  min-height: 0;
 
-  padding: 55px 35px 45px;
+  padding: 20px 35px 10px;
 
   text-align: center;
+  overflow: hidden;
 }
 
 .page-label {
@@ -254,7 +259,7 @@ header {
   width: 230px;
   height: 230px;
 
-  margin: 45px auto 0;
+  margin: 20px auto 0;
 
   display: flex;
   align-items: center;
@@ -340,7 +345,7 @@ header {
 }
 
 .small-text {
-  margin-top: 8px;
+  margin-top: 1px;
 
   font-size: 11px;
 
@@ -353,7 +358,12 @@ header {
 ================================ */
 
 .listening {
-  margin-top: 50px;
+  position: relative;
+
+  width: 230px;
+  height: auto;
+
+  margin: 20px auto 0;
 
   display: flex;
   flex-direction: column;
@@ -364,21 +374,69 @@ header {
 .listening-orb {
   position: relative;
 
-  width: 130px;
-  height: 130px;
+  width: 230px;
+  height: 230px;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent !important;
+
+  appearance: none;
+  -webkit-appearance: none;
 
   display: flex;
   align-items: center;
   justify-content: center;
+
+  cursor: pointer;
+
+  box-shadow: none;
+}
+
+.listening-orb:focus,
+.listening-orb:focus-visible,
+.listening-orb:active {
+  outline: none;
+  border: none;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+.listening-orb::before {
+  content: "";
+
+  position: absolute;
+
+  width: 115px;
+  height: 115px;
 
   border-radius: 50%;
 
   background: #5c57df;
 
   box-shadow:
-    0 0 70px rgba(92, 87, 223, 0.55);
+    0 0 60px rgba(92, 87, 223, 0.5);
 
-  animation: listeningPulse 1.4s ease-in-out infinite;
+  animation:
+    listeningPulse 1.4s ease-in-out infinite;
+}
+
+.listening-orb > svg {
+  position: relative;
+  z-index: 2;
+}
+
+.listening-orb:hover::before {
+  box-shadow:
+    0 0 75px rgba(92, 87, 223, 0.7);
+}
+
+.listening-orb:active::before {
+  transform: scale(0.94);
 }
 
 .sound-wave {
@@ -411,7 +469,7 @@ header {
 }
 
 .listening h3 {
-  margin-top: 35px;
+  margin-top: 20px;
 
   font-size: 13px;
 
@@ -419,7 +477,7 @@ header {
 }
 
 .listening p {
-  margin-top: 8px;
+  margin-top: 20px;
 
   font-size: 13px;
 
@@ -432,9 +490,9 @@ header {
 ================================ */
 
 .audio-bars {
-  height: 45px;
+  height: 30px;
 
-  margin-top: 25px;
+  margin-top: 8px;
 
   display: flex;
   align-items: center;
@@ -560,6 +618,7 @@ header {
     background 0.2s ease,
     opacity 0.2s ease;
 }
+
 
 .primary-button {
   border: none;
@@ -1025,11 +1084,17 @@ header {
 
 .continue-understanding {
   margin-top: 35px;
+  margin-bottom: 30px;
+  transform: translateY(-20px);
 
   transition:
     transform 0.2s ease,
     opacity 0.3s ease,
     background 0.2s ease;
+}
+
+.continue-understanding:hover {
+  transform: translateY(-22px);
 }
 
 .continue-understanding:disabled {
@@ -1284,7 +1349,7 @@ header {
 
 .steps {
   width: 100%;
-  height: 80px;
+  height: 55px;
 
   flex-shrink: 0;
 
@@ -1539,4 +1604,1231 @@ button:focus-visible {
   outline: 2px solid #7772ff;
 
   outline-offset: 3px;
+}
+
+/* =========================================
+   PAGE 2 — FIT EVERYTHING ON ONE SCREEN
+========================================= */
+
+.understand-page {
+  height: calc(100vh - 150px);
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.understand-page .page-description {
+  margin-bottom: 12px;
+}
+
+.understand-page .sentence-area {
+  margin-top: 0px;
+  flex: 1;
+
+  width: min(900px, 90%);
+  min-height: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.understand-page .transformation-line {
+  margin: 6px 0 6px;
+}
+
+.understand-page .continue-understanding {
+  flex-shrink: 0;
+  margin-top: -8;
+  margin-bottom: 8px;
+}
+
+/* =========================================
+   PAGE 3 — SINGLE SCREEN FINAL LAYOUT
+   ========================================= */
+
+.output-page {
+  height: calc(100vh - 72px);
+  box-sizing: border-box;
+  padding-top: 12px;
+  padding-bottom: 15px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+/* Keep the video section centered without adding
+   unnecessary height */
+.video-sequence {
+  margin-top: 28px;
+  padding: 0;
+  gap: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  overflow: visible;
+}
+
+/* Compact video cards */
+.video-card {
+  width: 245px;
+  min-width: 245px;
+  padding: 9px;
+
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* 16:9 video area */
+.video-card video,
+.no-video {
+  aspect-ratio: 16 / 9;
+}
+
+/* Buttons closer to cards */
+.output-actions {
+  margin-top: 18px;
+  gap: 12px;
+}
+
+/* Prevent hover/play animation from clipping */
+.video-card:hover,
+.video-card.video-active {
+  transform: translateY(-2px);
+}
+
+/* Keep hover movement smooth */
+.video-card {
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Completion message */
+.output-complete {
+  margin-top: 8px;
+}
+
+/* Prevent button hover from pushing layout */
+.output-actions .primary-button:hover,
+.output-actions .secondary-button:hover {
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   PAGE 3 — SINGLE SIGN VIEW
+   ========================================= */
+
+.output-page {
+  height: calc(100vh - 72px);
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-top: 12px;
+  padding-bottom: 10px;
+
+  overflow: hidden;
+}
+
+/* Description */
+.output-page .page-description {
+  margin-top: 7px;
+  margin-bottom: 0;
+}
+
+/* =========================================
+   SINGLE SIGN AREA
+   ========================================= */
+
+.single-sign-view {
+  width: min(620px, 80vw);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 24px;
+}
+
+/* Word above the video */
+.single-sign-word {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 3px;
+
+  color: #f5f5f7;
+
+  margin-bottom: 10px;
+
+  text-transform: uppercase;
+}
+
+/* =========================================
+   LARGE VIDEO
+   ========================================= */
+
+.single-video-container {
+  position: relative;
+
+  width: 600px;
+  max-width: 80vw;
+
+  aspect-ratio: 16 / 9;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: #050507;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 0 0 1px rgba(125, 105, 255, 0.04),
+    0 20px 50px rgba(0, 0, 0, 0.35);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Actual video */
+.single-video-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  transform: scale(1.18);
+  transform-origin: center bottom;
+}
+
+/* Subtle active state */
+.single-video-container.video-active {
+  border-color: rgba(120, 100, 255, 0.45);
+
+  box-shadow:
+    0 0 30px rgba(100, 80, 255, 0.15),
+    0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* =========================================
+   PLAYING INDICATOR
+   ========================================= */
+
+.single-video-container .playing-indicator {
+  position: absolute;
+
+  left: 14px;
+  bottom: 14px;
+
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  background: rgba(8, 8, 14, 0.82);
+
+  backdrop-filter: blur(8px);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.single-video-container .playing-indicator span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #8172ff;
+
+  box-shadow: 0 0 8px rgba(129, 114, 255, 0.8);
+}
+
+/* =========================================
+   SIGN PROGRESS
+   ========================================= */
+
+.sign-progress {
+  margin-top: 10px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.output-actions {
+  margin-top: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+}
+
+/* =========================================
+   COMPLETION MESSAGE
+   ========================================= */
+
+.output-complete {
+  margin-top: 7px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.38);
+}
+
+/* =========================================
+   NO SIGN
+   ========================================= */
+
+.no-signs {
+  width: 500px;
+  max-width: 80vw;
+
+  padding: 50px;
+
+  margin-top: 30px;
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* =========================================
+   BUTTON HOVER
+   ========================================= */
+
+.output-actions .primary-button:hover,
+.output-actions .secondary-button:hover {
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-height: 750px) {
+  .single-sign-view {
+    margin-top: 16px;
+  }
+
+  .single-video-container {
+    width: 520px;
+  }
+
+  .output-actions {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 800px) {
+  .single-video-container {
+    width: 90vw;
+    max-width: 600px;
+  }
+
+  .single-sign-view {
+    width: 90vw;
+  }
+}
+
+/* =========================================================
+   PAGE 3 — FINAL SINGLE-SIGN VIEW
+   ========================================================= */
+
+.output-page {
+  width: 100%;
+  max-width: 1250px;
+  height: calc(100vh - 113px);
+  min-height: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 12px 30px 8px;
+  overflow: hidden;
+}
+
+.output-page .page-label {
+  margin-bottom: 10px;
+}
+
+.output-page h2 {
+  margin: 0;
+}
+
+.output-page .page-description {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+/* One sign at a time */
+.single-sign-view {
+  width: min(620px, 78vw);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 18px;
+}
+
+.single-sign-word {
+  margin-bottom: 8px;
+
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  line-height: 1.2;
+
+  color: #f5f5f7;
+  text-transform: uppercase;
+}
+
+/* Large 16:9 viewing area */
+.single-video-container {
+  position: relative;
+
+  width: min(600px, 78vw);
+  aspect-ratio: 16 / 9;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: #050507;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 0 0 1px rgba(125, 105, 255, 0.04),
+    0 18px 45px rgba(0, 0, 0, 0.35);
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.single-video-container video {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  background: #000;
+}
+
+/* Very subtle active lift so nothing gets clipped */
+.single-video-container.video-active {
+  transform: translateY(-2px);
+
+  border-color: rgba(120, 100, 255, 0.45);
+
+  box-shadow:
+    0 0 30px rgba(100, 80, 255, 0.15),
+    0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Playing badge */
+.single-video-container .playing-indicator {
+  position: absolute;
+
+  left: 14px;
+  bottom: 14px;
+
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  background: rgba(8, 8, 14, 0.82);
+  backdrop-filter: blur(8px);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.single-video-container .playing-indicator span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #8172ff;
+  box-shadow: 0 0 8px rgba(129, 114, 255, 0.8);
+}
+
+/* Sign counter */
+.sign-progress {
+  margin-top: 7px;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* Buttons */
+.output-page .output-actions {
+  margin-top: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+}
+
+/* Completion message */
+.output-page .output-complete {
+  margin-top: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+/* No videos */
+.no-signs {
+  width: min(500px, 80vw);
+  margin-top: 25px;
+  padding: 40px;
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Button hover */
+.output-page .output-actions .primary-button:hover,
+.output-page .output-actions .secondary-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Short screens */
+@media (max-height: 750px) {
+  .output-page {
+    padding-top: 8px;
+    padding-bottom: 5px;
+  }
+
+  .output-page .page-label {
+    margin-bottom: 7px;
+  }
+
+  .output-page .page-description {
+    margin-top: 5px;
+  }
+
+  .single-sign-view {
+    margin-top: 10px;
+  }
+
+  .single-sign-word {
+    margin-bottom: 5px;
+  }
+
+  .single-video-container {
+    width: min(520px, 72vw);
+  }
+
+  .output-page .output-actions {
+    margin-top: 9px;
+  }
+}
+
+@media (max-width: 800px) {
+  .single-sign-view,
+  .single-video-container {
+    width: 90vw;
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .output-page {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .single-video-container {
+    width: 92vw;
+  }
+
+  .single-sign-word {
+    font-size: 15px;
+  }
+}
+
+/* =========================================================
+   SIGNBRIDGE PAGE 3
+   SINGLE REUSABLE VIDEO
+========================================================= */
+
+.output-page {
+  width: 100%;
+  max-width: 1250px;
+
+  height: calc(100vh - 113px);
+
+  min-height: 0;
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 12px 30px 8px;
+
+  overflow: hidden;
+}
+
+
+/* HEADER */
+
+.output-page .page-label {
+  margin-bottom: 8px;
+}
+
+
+.output-page h2 {
+  margin: 0;
+}
+
+
+.output-page .page-description {
+  margin-top: 7px;
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   SINGLE SIGN AREA
+========================================================= */
+
+.single-sign-view {
+  width: min(650px, 78vw);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 16px;
+}
+
+
+/* CURRENT WORD */
+
+.single-sign-word {
+  margin-bottom: 8px;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  line-height: 1.2;
+
+  color: #f5f5f7;
+
+  text-transform: uppercase;
+
+  min-height: 22px;
+}
+
+
+/* =========================================================
+   ONE VIDEO CONTAINER
+========================================================= */
+
+.single-video-container {
+  position: relative;
+
+  width: min(620px, 78vw);
+
+  aspect-ratio: 16 / 9;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  background: #050507;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 0 0 1px
+      rgba(125, 105, 255, 0.04),
+
+    0 18px 45px
+      rgba(0, 0, 0, 0.35);
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* THE ONE VIDEO */
+
+.single-video-container video {
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: contain;
+
+  background: #000;
+}
+
+
+/* ACTIVE */
+
+.single-video-container.video-active {
+  border-color:
+    rgba(120, 100, 255, 0.55);
+
+  box-shadow:
+    0 0 35px
+      rgba(100, 80, 255, 0.16),
+
+    0 20px 50px
+      rgba(0, 0, 0, 0.4);
+}
+
+
+/* =========================================================
+   PLAYING INDICATOR
+========================================================= */
+
+.single-video-container
+.playing-indicator {
+  position: absolute;
+
+  left: 14px;
+
+  bottom: 14px;
+
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  background:
+    rgba(8, 8, 14, 0.82);
+
+  backdrop-filter: blur(8px);
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+
+  color: #fff;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+
+.single-video-container
+.playing-indicator span {
+  width: 6px;
+
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #8172ff;
+
+  box-shadow:
+    0 0 8px
+      rgba(129, 114, 255, 0.8);
+}
+
+
+/* =========================================================
+   SIGN COUNTER
+========================================================= */
+
+.sign-progress {
+  margin-top: 7px;
+
+  font-size: 10px;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  color:
+    rgba(255, 255, 255, 0.42);
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.output-page .output-actions {
+  margin-top: 14px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+}
+
+
+.output-page .output-complete {
+  margin-top: 6px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  font-size: 10px;
+
+  color:
+    rgba(255, 255, 255, 0.38);
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.output-page .playing-status {
+  margin-top: 7px;
+
+  padding: 7px 14px;
+
+  border-radius: 8px;
+
+  font-size: 10px;
+}
+
+
+.status-dot {
+  display: inline-block;
+
+  width: 6px;
+
+  height: 6px;
+
+  margin-right: 7px;
+
+  border-radius: 50%;
+
+  background: #7772ff;
+}
+
+
+/* =========================================================
+   KILL OLD HORIZONTAL VIDEO UI
+========================================================= */
+
+.video-sequence,
+.video-card,
+.video-word {
+  display: none !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-height: 750px) {
+
+  .output-page {
+    padding-top: 7px;
+  }
+
+  .single-sign-view {
+    margin-top: 9px;
+  }
+
+  .single-video-container {
+    width: min(550px, 72vw);
+  }
+
+  .output-page .output-actions {
+    margin-top: 8px;
+  }
+
+}
+
+
+@media (max-width: 800px) {
+
+  .single-sign-view {
+    width: 90vw;
+  }
+
+  .single-video-container {
+    width: 90vw;
+  }
+
+}
+
+/* =========================================================
+   PAGE 3 — FINAL: ONE REUSABLE VIDEO ELEMENT
+   The same video element changes its source for each sign.
+========================================================= */
+
+.output-page {
+  width: 100%;
+  max-width: 1250px;
+  height: calc(100vh - 113px);
+  min-height: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 12px 30px 8px;
+  overflow: hidden;
+}
+
+.output-page .page-label {
+  margin-bottom: 8px;
+}
+
+.output-page h2 {
+  margin: 0;
+}
+
+.output-page .page-description {
+  margin-top: 7px;
+  margin-bottom: 0;
+}
+
+/* ONE reusable sign area */
+.single-sign-view {
+  width: min(650px, 78vw);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 16px;
+}
+
+.single-sign-word {
+  min-height: 22px;
+
+  margin-bottom: 8px;
+
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  line-height: 1.2;
+
+  color: #f5f5f7;
+  text-transform: uppercase;
+}
+
+/* ONE video element / ONE viewing window */
+.single-video-container {
+  position: relative;
+
+  width: min(620px, 78vw);
+  aspect-ratio: 16 / 9;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  background: #050507;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  box-shadow:
+    0 0 0 1px rgba(125, 105, 255, 0.04),
+    0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+.single-video-container video {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+  background: #000;
+}
+
+/* Active playback */
+.single-video-container.video-active {
+  border-color: rgba(120, 100, 255, 0.55);
+
+  box-shadow:
+    0 0 35px rgba(100, 80, 255, 0.16),
+    0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Playing badge */
+.single-video-container .playing-indicator {
+  position: absolute;
+
+  left: 14px;
+  bottom: 14px;
+
+  padding: 6px 10px;
+
+  border-radius: 7px;
+
+  background: rgba(8, 8, 14, 0.82);
+  backdrop-filter: blur(8px);
+
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.single-video-container .playing-indicator span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #8172ff;
+
+  box-shadow: 0 0 8px rgba(129, 114, 255, 0.8);
+}
+
+/* Counter */
+.sign-progress {
+  margin-top: 7px;
+
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+
+  color: rgba(255, 255, 255, 0.42);
+}
+
+/* Buttons */
+.output-page .output-actions {
+  margin-top: 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+}
+
+.output-page .output-actions button:hover {
+  transform: translateY(-2px);
+}
+
+/* Status */
+.output-page .playing-status {
+  margin-top: 7px;
+  padding: 7px 14px;
+
+  border-radius: 8px;
+
+  font-size: 10px;
+}
+
+/* Completion */
+.output-page .output-complete {
+  margin-top: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.38);
+}
+
+/* Empty state */
+.no-signs {
+  width: min(500px, 80vw);
+
+  margin-top: 25px;
+  padding: 40px;
+
+  text-align: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+
+  color: rgba(255, 255, 255, 0.45);
+}
+
+/* Completely disable the old horizontal card layout */
+.video-sequence,
+.video-card,
+.video-word {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-height: 750px) {
+  .single-sign-view {
+    margin-top: 9px;
+  }
+
+  .single-video-container {
+    width: min(550px, 72vw);
+  }
+
+  .output-page .output-actions {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 800px) {
+  .single-sign-view,
+  .single-video-container {
+    width: 90vw;
+    max-width: 600px;
+  }
+}
+
+/* =========================================================
+   ASL VIDEO — REDUCE EMPTY SPACE ABOVE SIGNER
+========================================================= */
+
+.single-video-container {
+  overflow: hidden;
+  
+}
+
+.single-video-container video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  transform: scale(1.20);
+  transform-origin: center bottom;
+}
+
+.video-side-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #f5f5f7;
+  white-space: nowrap;
+}
+
+.video-word {
+  left: 28px;
+}
+
+.video-progress {
+  right: 28px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #9a9aa5;
+}
+
+.video-side-label {
+  position: absolute;
+  top: 24px;
+  z-index: 10;
+
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #f5f5f7;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.video-side-label.video-word {
+  display: block !important;
+}
+
+.single-video-container video {
+  transition: opacity 0.35s ease;
+}
+
+.single-video-container.video-transitioning video {
+  opacity: 0;
 }

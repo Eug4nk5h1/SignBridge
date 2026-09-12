@@ -16,8 +16,6 @@ def translate_to_asl(analysis):
 
     while i < len(keywords):
 
-        # Check whether the current word and next word
-        # form a known phrase
         if i + 1 < len(keywords):
 
             pair = (

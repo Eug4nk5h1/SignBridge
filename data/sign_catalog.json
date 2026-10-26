@@ -159,6 +159,18 @@
       "license": null
     },
     {
+      "concept_id": "SB-C-CAR",
+      "concept_label": "Car",
+      "language": "ASL",
+      "sign_id": "ASL-S-CAR",
+      "gloss": "CAR",
+      "english_forms": [
+        "car",
+        "cars"
+      ],
+      "video_file": "car.mp4"
+    },
+    {
       "concept_id": "SB-C-COLLEGE",
       "concept_label": "College",
       "language": "ASL",
@@ -284,7 +296,8 @@
       "gloss": "EVERYONE",
       "english_forms": [
         "everyone",
-        "everybody"
+        "everybody",
+        "every one"
       ],
       "video_file": "everyone.mp4",
       "source_name": "ASL Signbank",
@@ -434,7 +447,9 @@
       "english_forms": [
         "help",
         "helping",
-        "helped"
+        "helped",
+        "assistance",
+        "support"
       ],
       "video_file": "help.mp4"
     },

@@ -14,13 +14,9 @@ from functools import lru_cache
 from pathlib import Path
 
 CATALOG_PATH = Path(__file__).resolve().parent.parent / "data" / "sign_catalog.json"
-with CATALOG_PATH.open(encoding="utf-8") as catalog_file:
-    _CATALOG = json.load(catalog_file)
-
-_GLOSS_ENTRIES = {
-    (entry["language"], entry["gloss"].upper()): entry
-    for entry in _CATALOG["entries"]
-}
+_CATALOG = None
+_CATALOG_MTIME_NS = None
+_GLOSS_ENTRIES = {}
 
 
 def _normalize_form(value):
@@ -28,11 +24,94 @@ def _normalize_form(value):
 
 
 _ALIAS_ENTRIES = defaultdict(set)
-for _entry in _CATALOG["entries"]:
-    for _form in _entry.get("english_forms", []):
-        _ALIAS_ENTRIES[_normalize_form(_form)].add(
-            (_entry["language"], _entry["gloss"].upper())
-        )
+_PHRASE_ALIAS_ENTRIES = defaultdict(set)
+_ORDERED_PHRASE_ALIASES = []
+
+
+def _refresh_catalog_if_changed():
+    """Reload catalog data and derived aliases after an on-disk catalog edit."""
+    global _CATALOG, _CATALOG_MTIME_NS, _GLOSS_ENTRIES
+    global _ALIAS_ENTRIES, _PHRASE_ALIAS_ENTRIES, _ORDERED_PHRASE_ALIASES
+
+    modified_ns = CATALOG_PATH.stat().st_mtime_ns
+    if modified_ns == _CATALOG_MTIME_NS:
+        return
+
+    with CATALOG_PATH.open(encoding="utf-8") as catalog_file:
+        catalog = json.load(catalog_file)
+    gloss_entries = {
+        (entry["language"], entry["gloss"].upper()): entry
+        for entry in catalog["entries"]
+    }
+    aliases = defaultdict(set)
+    phrase_aliases = defaultdict(set)
+    for entry in catalog["entries"]:
+        for form in entry.get("english_forms", []):
+            normalized_form = _normalize_form(form)
+            entry_key = (entry["language"], entry["gloss"].upper())
+            form_words = tuple(normalized_form.split())
+            if len(form_words) > 1:
+                phrase_aliases[form_words].add(entry_key)
+            else:
+                aliases[normalized_form].add(entry_key)
+
+    _CATALOG = catalog
+    _GLOSS_ENTRIES = gloss_entries
+    _ALIAS_ENTRIES = aliases
+    _PHRASE_ALIAS_ENTRIES = phrase_aliases
+    _ORDERED_PHRASE_ALIASES = sorted(
+        phrase_aliases.items(), key=lambda item: len(item[0]), reverse=True
+    )
+    _CATALOG_MTIME_NS = modified_ns
+
+
+def _collapse_catalog_phrases(tokens, target_language):
+    """Collapse catalog phrases before mapping, including joined compound input."""
+    collapsed = []
+    index = 0
+    while index < len(tokens):
+        matched = None
+        for phrase, entries in _ORDERED_PHRASE_ALIASES:
+            phrase_tokens = tokens[index:index + len(phrase)]
+            joined_phrase = re.sub(r"[\s-]+", "", " ".join(phrase))
+            candidates = sorted(
+                gloss for language, gloss in entries if language == target_language
+            )
+            exact_phrase_tokens = []
+            if len(phrase_tokens) == len(phrase):
+                token_words = tuple(
+                    _normalize_form(token.get("lemma") or token.get("surface"))
+                    for token in phrase_tokens
+                )
+                if token_words == phrase:
+                    exact_phrase_tokens = phrase_tokens
+
+            single_token = tokens[index]
+            single_word = _normalize_form(single_token.get("lemma") or single_token.get("surface"))
+            joined_form = re.sub(r"[\s-]+", "", single_word)
+            joined_match = (
+                len(phrase) > 1
+                and len(joined_phrase) >= 7
+                and joined_form == joined_phrase
+            )
+            if (exact_phrase_tokens or joined_match) and len(candidates) == 1:
+                matched = (exact_phrase_tokens or [single_token], candidates[0])
+                break
+
+        if matched:
+            phrase_tokens, gloss = matched
+            collapsed.append({
+                **phrase_tokens[0],
+                "surface": " ".join(str(token.get("surface") or "") for token in phrase_tokens),
+                "lemma": " ".join(phrase),
+                "candidate_gloss": gloss,
+                "catalog_phrase": True,
+            })
+            index += len(phrase_tokens)
+        else:
+            collapsed.append(tokens[index])
+            index += 1
+    return collapsed
 
 
 @lru_cache(maxsize=1)
@@ -141,11 +220,13 @@ def resolve_semantic_sequence(analysis, target_language="ASL"):
     and an auditable per-token trace showing exact, WordNet, or unresolved
     decisions.
     """
+    _refresh_catalog_if_changed()
     wn = _wordnet_modules()
     tokens = analysis.get("semantic_tokens") or [
         {"surface": word, "lemma": str(word).lower(), "pos": "X", "candidate_gloss": word}
         for word in analysis.get("keywords", [])
     ]
+    tokens = _collapse_catalog_phrases(tokens, target_language)
     sequence = []
     trace = []
 
@@ -158,9 +239,13 @@ def resolve_semantic_sequence(analysis, target_language="ASL"):
         if gloss_entry:
             resolved = candidate
             status = "resolved"
-            method = "exact_gloss"
+            method = "catalog_english_phrase" if token.get("catalog_phrase") else "exact_gloss"
             possible = [candidate]
-            reason = "The normalized gloss is present in the target-language catalog."
+            reason = (
+                "The expression matches one curated target-language catalog phrase."
+                if token.get("catalog_phrase")
+                else "The normalized gloss is present in the target-language catalog."
+            )
             confidence = 1.0
         else:
             exact_aliases = sorted(

@@ -6,17 +6,31 @@ from pathlib import Path
 from src.sign_library import SIGNS_FOLDER
 
 CATALOG_PATH = Path(__file__).resolve().parent.parent / "data" / "sign_catalog.json"
-with CATALOG_PATH.open(encoding="utf-8") as catalog_file:
-    _catalog = json.load(catalog_file)
+_catalog = None
+_catalog_mtime_ns = None
+_ENTRIES = {}
 
-_ENTRIES = {
-    (entry["language"], entry["gloss"].upper()): entry
-    for entry in _catalog["entries"]
-}
+
+def _refresh_catalog_if_changed():
+    """Pick up catalog edits without requiring the API server to restart."""
+    global _catalog, _catalog_mtime_ns, _ENTRIES
+
+    modified_ns = CATALOG_PATH.stat().st_mtime_ns
+    if modified_ns == _catalog_mtime_ns:
+        return
+    with CATALOG_PATH.open(encoding="utf-8") as catalog_file:
+        catalog = json.load(catalog_file)
+    _catalog = catalog
+    _ENTRIES = {
+        (entry["language"], entry["gloss"].upper()): entry
+        for entry in catalog["entries"]
+    }
+    _catalog_mtime_ns = modified_ns
 
 
 def resolve_sign_sequence(gloss_sequence, target_language="ASL"):
     """Return ordered concept/sign metadata, including explicit unresolved states."""
+    _refresh_catalog_if_changed()
     results = []
     for raw_gloss in gloss_sequence:
         gloss = str(raw_gloss).strip().upper()
@@ -55,5 +69,6 @@ def resolve_sign_sequence(gloss_sequence, target_language="ASL"):
 
 def catalog_summary():
     """Return public counts for the demo and project documentation."""
+    _refresh_catalog_if_changed()
     languages = sorted({entry["language"] for entry in _catalog["entries"]})
     return {"concept_count": len(_catalog["entries"]), "languages": languages}

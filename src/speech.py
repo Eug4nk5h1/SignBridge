@@ -30,5 +30,5 @@ def record_audio():
 
 def speech_to_text(audio_file):
     """Transcribe audio with Whisper; FFmpeg must be installed and on PATH."""
-    result = _whisper_model().transcribe(str(audio_file), language="en")
+    result = _whisper_model().transcribe(str(audio_file), language="en", task="transcribe")
     return result["text"].strip()

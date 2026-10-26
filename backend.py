@@ -2,14 +2,16 @@ from pathlib import Path
 import shutil
 from tempfile import NamedTemporaryFile
 
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from src.concept_mapper import catalog_summary, resolve_sign_sequence
 from src.nlp import analyze_sentence
-from src.sign_library import PROJECT_ROOT, get_absolute_sign_path
+from src.semantic_mapper import resolve_semantic_sequence
+from src.sign_library import PROJECT_ROOT
 from src.speech import speech_to_text
-from src.translator import translate_to_asl
+from src.translator import transform_to_target_language
 
 app = FastAPI(title="SignBridge AI Backend")
 app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
@@ -33,13 +35,35 @@ async def translate(file: UploadFile = File(...)):
             audio_path = Path(buffer.name)
             shutil.copyfileobj(file.file, buffer)
         text = speech_to_text(str(audio_path))
+        if not text:
+            raise HTTPException(status_code=422, detail="No speech was recognized. Try again and speak clearly.")
         analysis = analyze_sentence(text)
-        sign_sequence = translate_to_asl(analysis)
-        signs = []
-        for sign in sign_sequence:
-            video_path = get_absolute_sign_path(sign)
-            signs.append({"word": sign, "video": f"/signs/{Path(video_path).name}" if video_path else None, "found": video_path is not None})
-        return {"text": text, "analysis": analysis, "sign_sequence": sign_sequence, "signs": signs}
+        semantic_mapping = resolve_semantic_sequence(analysis, target_language="ASL")
+        transformation = transform_to_target_language(
+            analysis,
+            semantic_mapping["sequence"],
+            target_language="ASL",
+        )
+        sign_sequence = transformation["sequence"]
+        signs = resolve_sign_sequence(sign_sequence)
+        return {
+            "text": text,
+            "analysis": analysis,
+            "sign_sequence": sign_sequence,
+            "concept_sequence": [
+                {"gloss": item["gloss"], "concept_id": item["concept_id"], "status": item["status"]}
+                for item in signs
+            ],
+            "signs": signs,
+            "catalog": catalog_summary(),
+            "semantic_mapping": semantic_mapping,
+            "target_transformation": transformation,
+            "translation_method": (
+                "whisper_spacy_wordnet_and_controlled_asl_rules"
+                if semantic_mapping["semantic_resource"] == "WordNet"
+                else "whisper_spacy_catalog_and_controlled_asl_rules"
+            ),
+        }
     finally:
         if audio_path is not None:
             audio_path.unlink(missing_ok=True)

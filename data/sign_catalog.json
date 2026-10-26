@@ -1,0 +1,1154 @@
+{
+  "schema_version": 1,
+  "identifier_note": "SignBridge-local identifiers for this prototype; not official sign-language codes.",
+  "entries": [
+    {
+      "concept_id": "SB-C-ACT",
+      "concept_label": "Act",
+      "language": "ASL",
+      "sign_id": "ASL-S-ACT",
+      "gloss": "ACT",
+      "english_forms": [
+        "act",
+        "acting",
+        "acted"
+      ],
+      "video_file": "act.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-AGE",
+      "concept_label": "Age",
+      "language": "ASL",
+      "sign_id": "ASL-S-AGE",
+      "gloss": "AGE",
+      "english_forms": [
+        "age",
+        "aged",
+        "aging"
+      ],
+      "video_file": "age.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-ALL-DAY-AND-NIGHT",
+      "concept_label": "All Day And Night",
+      "language": "ASL",
+      "sign_id": "ASL-S-ALL-DAY-AND-NIGHT",
+      "gloss": "ALL_DAY_AND_NIGHT",
+      "english_forms": [
+        "all day and night"
+      ],
+      "video_file": "all-day-and-night.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-ALL-MORNING",
+      "concept_label": "All Morning",
+      "language": "ASL",
+      "sign_id": "ASL-S-ALL-MORNING",
+      "gloss": "ALL_MORNING",
+      "english_forms": [
+        "all morning"
+      ],
+      "video_file": "all-morning.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-BAD",
+      "concept_label": "Bad",
+      "language": "ASL",
+      "sign_id": "ASL-S-BAD",
+      "gloss": "BAD",
+      "english_forms": [
+        "bad"
+      ],
+      "video_file": "bad.mp4"
+    },
+    {
+      "concept_id": "SB-C-BEST-FRIEND",
+      "concept_label": "Best Friend",
+      "language": "ASL",
+      "sign_id": "ASL-S-BEST-FRIEND",
+      "gloss": "BEST_FRIEND",
+      "english_forms": [
+        "best friend"
+      ],
+      "video_file": "best-friend.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-BLINK",
+      "concept_label": "Blink",
+      "language": "ASL",
+      "sign_id": "ASL-S-BLINK",
+      "gloss": "BLINK",
+      "english_forms": [
+        "blink",
+        "blinking",
+        "blinked"
+      ],
+      "video_file": "blink.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-BRAG",
+      "concept_label": "Brag",
+      "language": "ASL",
+      "sign_id": "ASL-S-BRAG",
+      "gloss": "BRAG",
+      "english_forms": [
+        "brag",
+        "bragging",
+        "bragged"
+      ],
+      "video_file": "brag.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-BUT",
+      "concept_label": "But",
+      "language": "ASL",
+      "sign_id": "ASL-S-BUT",
+      "gloss": "BUT",
+      "english_forms": [
+        "but"
+      ],
+      "video_file": "but.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-COLLABORATE",
+      "concept_label": "Collaborate",
+      "language": "ASL",
+      "sign_id": "ASL-S-COLLABORATE",
+      "gloss": "COLLABORATE",
+      "english_forms": [
+        "collaborate",
+        "collaborating",
+        "collaborated"
+      ],
+      "video_file": "collaborate.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-COLLEGE",
+      "concept_label": "College",
+      "language": "ASL",
+      "sign_id": "ASL-S-COLLEGE",
+      "gloss": "COLLEGE",
+      "english_forms": [
+        "college"
+      ],
+      "video_file": "college.mp4"
+    },
+    {
+      "concept_id": "SB-C-COME",
+      "concept_label": "Come",
+      "language": "ASL",
+      "sign_id": "ASL-S-COME",
+      "gloss": "COME",
+      "english_forms": [
+        "come",
+        "coming",
+        "came"
+      ],
+      "video_file": "come.mp4"
+    },
+    {
+      "concept_id": "SB-C-CONFUSED",
+      "concept_label": "Confused",
+      "language": "ASL",
+      "sign_id": "ASL-S-CONFUSED",
+      "gloss": "CONFUSED",
+      "english_forms": [
+        "confuse",
+        "confused",
+        "confusing"
+      ],
+      "video_file": "confused.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-CONTACT",
+      "concept_label": "Contact",
+      "language": "ASL",
+      "sign_id": "ASL-S-CONTACT",
+      "gloss": "CONTACT",
+      "english_forms": [
+        "contact",
+        "contacting",
+        "contacted"
+      ],
+      "video_file": "contact.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-DONT-KNOW",
+      "concept_label": "Dont Know",
+      "language": "ASL",
+      "sign_id": "ASL-S-DONT-KNOW",
+      "gloss": "DONT_KNOW",
+      "english_forms": [
+        "don't know",
+        "do not know",
+        "I don't know",
+        "I do not know"
+      ],
+      "video_file": "dont-know.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-DONT-LIKE",
+      "concept_label": "Dont Like",
+      "language": "ASL",
+      "sign_id": "ASL-S-DONT-LIKE",
+      "gloss": "DONT_LIKE",
+      "english_forms": [
+        "don't like",
+        "do not like"
+      ],
+      "video_file": "dont-like.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-DRINK",
+      "concept_label": "Drink",
+      "language": "ASL",
+      "sign_id": "ASL-S-DRINK",
+      "gloss": "DRINK",
+      "english_forms": [
+        "drink",
+        "drinking",
+        "drank"
+      ],
+      "video_file": "drink.mp4"
+    },
+    {
+      "concept_id": "SB-C-EAT",
+      "concept_label": "Eat",
+      "language": "ASL",
+      "sign_id": "ASL-S-EAT",
+      "gloss": "EAT",
+      "english_forms": [
+        "eat",
+        "eating",
+        "ate"
+      ],
+      "video_file": "eat.mp4"
+    },
+    {
+      "concept_id": "SB-C-EVERYONE",
+      "concept_label": "Everyone",
+      "language": "ASL",
+      "sign_id": "ASL-S-EVERYONE",
+      "gloss": "EVERYONE",
+      "english_forms": [
+        "everyone",
+        "everybody"
+      ],
+      "video_file": "everyone.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-EXERCISE",
+      "concept_label": "Exercise",
+      "language": "ASL",
+      "sign_id": "ASL-S-EXERCISE",
+      "gloss": "EXERCISE",
+      "english_forms": [
+        "exercise",
+        "exercising",
+        "exercised"
+      ],
+      "video_file": "exercise.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-FAMILY",
+      "concept_label": "Family",
+      "language": "ASL",
+      "sign_id": "ASL-S-FAMILY",
+      "gloss": "FAMILY",
+      "english_forms": [
+        "family",
+        "families"
+      ],
+      "video_file": "family.mp4"
+    },
+    {
+      "concept_id": "SB-C-FAMOUS",
+      "concept_label": "Famous",
+      "language": "ASL",
+      "sign_id": "ASL-S-FAMOUS",
+      "gloss": "FAMOUS",
+      "english_forms": [
+        "famous"
+      ],
+      "video_file": "famous.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-FIX",
+      "concept_label": "Fix",
+      "language": "ASL",
+      "sign_id": "ASL-S-FIX",
+      "gloss": "FIX",
+      "english_forms": [
+        "fix",
+        "fixing",
+        "fixed"
+      ],
+      "video_file": "fix.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-FRIEND",
+      "concept_label": "Friend",
+      "language": "ASL",
+      "sign_id": "ASL-S-FRIEND",
+      "gloss": "FRIEND",
+      "english_forms": [
+        "friend",
+        "friends"
+      ],
+      "video_file": "friend.mp4"
+    },
+    {
+      "concept_id": "SB-C-GO",
+      "concept_label": "Go",
+      "language": "ASL",
+      "sign_id": "ASL-S-GO",
+      "gloss": "GO",
+      "english_forms": [
+        "go",
+        "going",
+        "went",
+        "gone"
+      ],
+      "video_file": "go.mp4"
+    },
+    {
+      "concept_id": "SB-C-GOOD",
+      "concept_label": "Good",
+      "language": "ASL",
+      "sign_id": "ASL-S-GOOD",
+      "gloss": "GOOD",
+      "english_forms": [
+        "good"
+      ],
+      "video_file": "good.mp4"
+    },
+    {
+      "concept_id": "SB-C-GOODBYE",
+      "concept_label": "Goodbye",
+      "language": "ASL",
+      "sign_id": "ASL-S-GOODBYE",
+      "gloss": "GOODBYE",
+      "english_forms": [
+        "goodbye"
+      ],
+      "video_file": "goodbye.mp4"
+    },
+    {
+      "concept_id": "SB-C-HE",
+      "concept_label": "He",
+      "language": "ASL",
+      "sign_id": "ASL-S-HE",
+      "gloss": "HE",
+      "english_forms": [
+        "he",
+        "him"
+      ],
+      "video_file": "he.mp4"
+    },
+    {
+      "concept_id": "SB-C-HELLO",
+      "concept_label": "Hello",
+      "language": "ASL",
+      "sign_id": "ASL-S-HELLO",
+      "gloss": "HELLO",
+      "english_forms": [
+        "hello",
+        "hi"
+      ],
+      "video_file": "hello.mp4"
+    },
+    {
+      "concept_id": "SB-C-HELP",
+      "concept_label": "Help",
+      "language": "ASL",
+      "sign_id": "ASL-S-HELP",
+      "gloss": "HELP",
+      "english_forms": [
+        "help",
+        "helping",
+        "helped"
+      ],
+      "video_file": "help.mp4"
+    },
+    {
+      "concept_id": "SB-C-HIS",
+      "concept_label": "His",
+      "language": "ASL",
+      "sign_id": "ASL-S-HIS",
+      "gloss": "HIS",
+      "english_forms": [
+        "his"
+      ],
+      "video_file": "his.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-HOME",
+      "concept_label": "Home",
+      "language": "ASL",
+      "sign_id": "ASL-S-HOME",
+      "gloss": "HOME",
+      "english_forms": [
+        "home"
+      ],
+      "video_file": "home.mp4"
+    },
+    {
+      "concept_id": "SB-C-HOMEWORK",
+      "concept_label": "Homework",
+      "language": "ASL",
+      "sign_id": "ASL-S-HOMEWORK",
+      "gloss": "HOMEWORK",
+      "english_forms": [
+        "homework"
+      ],
+      "video_file": "homework.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-HOW",
+      "concept_label": "How",
+      "language": "ASL",
+      "sign_id": "ASL-S-HOW",
+      "gloss": "HOW",
+      "english_forms": [
+        "how"
+      ],
+      "video_file": "how.mp4"
+    },
+    {
+      "concept_id": "SB-C-I",
+      "concept_label": "I",
+      "language": "ASL",
+      "sign_id": "ASL-S-I",
+      "gloss": "I",
+      "english_forms": [
+        "i",
+        "mine"
+      ],
+      "video_file": "i.mp4"
+    },
+    {
+      "concept_id": "SB-C-KNOW",
+      "concept_label": "Know",
+      "language": "ASL",
+      "sign_id": "ASL-S-KNOW",
+      "gloss": "KNOW",
+      "english_forms": [
+        "know",
+        "knowing",
+        "knew"
+      ],
+      "video_file": "know.mp4"
+    },
+    {
+      "concept_id": "SB-C-KNOWLEDGE",
+      "concept_label": "Knowledge",
+      "language": "ASL",
+      "sign_id": "ASL-S-KNOWLEDGE",
+      "gloss": "KNOWLEDGE",
+      "english_forms": [
+        "knowledge"
+      ],
+      "video_file": "knowledge.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-LEARN",
+      "concept_label": "Learn",
+      "language": "ASL",
+      "sign_id": "ASL-S-LEARN",
+      "gloss": "LEARN",
+      "english_forms": [
+        "learn",
+        "learning",
+        "learned"
+      ],
+      "video_file": "learn.mp4"
+    },
+    {
+      "concept_id": "SB-C-LIKE",
+      "concept_label": "Like",
+      "language": "ASL",
+      "sign_id": "ASL-S-LIKE",
+      "gloss": "LIKE",
+      "english_forms": [
+        "like",
+        "liking",
+        "liked"
+      ],
+      "video_file": "like.mp4"
+    },
+    {
+      "concept_id": "SB-C-LOVE",
+      "concept_label": "Love",
+      "language": "ASL",
+      "sign_id": "ASL-S-LOVE",
+      "gloss": "LOVE",
+      "english_forms": [
+        "love",
+        "loving",
+        "loved"
+      ],
+      "video_file": "love.mp4"
+    },
+    {
+      "concept_id": "SB-C-ME",
+      "concept_label": "Me",
+      "language": "ASL",
+      "sign_id": "ASL-S-ME",
+      "gloss": "ME",
+      "english_forms": [
+        "me"
+      ],
+      "video_file": "me.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-MORNING",
+      "concept_label": "Morning",
+      "language": "ASL",
+      "sign_id": "ASL-S-MORNING",
+      "gloss": "MORNING",
+      "english_forms": [
+        "morning"
+      ],
+      "video_file": "morning.mp4"
+    },
+    {
+      "concept_id": "SB-C-MY",
+      "concept_label": "My",
+      "language": "ASL",
+      "sign_id": "ASL-S-MY",
+      "gloss": "MY",
+      "english_forms": [
+        "my"
+      ],
+      "video_file": "my.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-NAME",
+      "concept_label": "Name",
+      "language": "ASL",
+      "sign_id": "ASL-S-NAME",
+      "gloss": "NAME",
+      "english_forms": [
+        "name"
+      ],
+      "video_file": "name.mp4"
+    },
+    {
+      "concept_id": "SB-C-NEED",
+      "concept_label": "Need",
+      "language": "ASL",
+      "sign_id": "ASL-S-NEED",
+      "gloss": "NEED",
+      "english_forms": [
+        "need",
+        "needing",
+        "needed"
+      ],
+      "video_file": "need.mp4"
+    },
+    {
+      "concept_id": "SB-C-NIGHT",
+      "concept_label": "Night",
+      "language": "ASL",
+      "sign_id": "ASL-S-NIGHT",
+      "gloss": "NIGHT",
+      "english_forms": [
+        "night",
+        "tonight",
+        "tonight's"
+      ],
+      "video_file": "night.mp4"
+    },
+    {
+      "concept_id": "SB-C-NO",
+      "concept_label": "No",
+      "language": "ASL",
+      "sign_id": "ASL-S-NO",
+      "gloss": "NO",
+      "english_forms": [
+        "no",
+        "not",
+        "n't",
+        "n’t",
+        "cannot"
+      ],
+      "video_file": "no.mp4"
+    },
+    {
+      "concept_id": "SB-C-NOW",
+      "concept_label": "Now",
+      "language": "ASL",
+      "sign_id": "ASL-S-NOW",
+      "gloss": "NOW",
+      "english_forms": [
+        "now"
+      ],
+      "video_file": "now.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-ONLY-ME",
+      "concept_label": "Only Me",
+      "language": "ASL",
+      "sign_id": "ASL-S-ONLY-ME",
+      "gloss": "ONLY_ME",
+      "english_forms": [
+        "only me"
+      ],
+      "video_file": "only-me.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-PLEASE",
+      "concept_label": "Please",
+      "language": "ASL",
+      "sign_id": "ASL-S-PLEASE",
+      "gloss": "PLEASE",
+      "english_forms": [
+        "please"
+      ],
+      "video_file": "please.mp4"
+    },
+    {
+      "concept_id": "SB-C-QUESTION",
+      "concept_label": "Question",
+      "language": "ASL",
+      "sign_id": "ASL-S-QUESTION",
+      "gloss": "QUESTION",
+      "english_forms": [
+        "question",
+        "questions"
+      ],
+      "video_file": "question.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-RETIRE",
+      "concept_label": "Retire",
+      "language": "ASL",
+      "sign_id": "ASL-S-RETIRE",
+      "gloss": "RETIRE",
+      "english_forms": [
+        "retire",
+        "retiring",
+        "retired"
+      ],
+      "video_file": "retire.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-SCHOOL",
+      "concept_label": "School",
+      "language": "ASL",
+      "sign_id": "ASL-S-SCHOOL",
+      "gloss": "SCHOOL",
+      "english_forms": [
+        "school"
+      ],
+      "video_file": "school.mp4"
+    },
+    {
+      "concept_id": "SB-C-SHE",
+      "concept_label": "She",
+      "language": "ASL",
+      "sign_id": "ASL-S-SHE",
+      "gloss": "SHE",
+      "english_forms": [
+        "she",
+        "her"
+      ],
+      "video_file": "she.mp4"
+    },
+    {
+      "concept_id": "SB-C-SHOCKED",
+      "concept_label": "Shocked",
+      "language": "ASL",
+      "sign_id": "ASL-S-SHOCKED",
+      "gloss": "SHOCKED",
+      "english_forms": [
+        "shock",
+        "shocked",
+        "shocking"
+      ],
+      "video_file": "shocked.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-SLEEP",
+      "concept_label": "Sleep",
+      "language": "ASL",
+      "sign_id": "ASL-S-SLEEP",
+      "gloss": "SLEEP",
+      "english_forms": [
+        "bed",
+        "sleep",
+        "sleeping",
+        "slept"
+      ],
+      "video_file": "sleep.mp4"
+    },
+    {
+      "concept_id": "SB-C-SORRY",
+      "concept_label": "Sorry",
+      "language": "ASL",
+      "sign_id": "ASL-S-SORRY",
+      "gloss": "SORRY",
+      "english_forms": [
+        "sorry"
+      ],
+      "video_file": "sorry.mp4"
+    },
+    {
+      "concept_id": "SB-C-STUDENT",
+      "concept_label": "Student",
+      "language": "ASL",
+      "sign_id": "ASL-S-STUDENT",
+      "gloss": "STUDENT",
+      "english_forms": [
+        "student",
+        "students"
+      ],
+      "video_file": "student.mp4"
+    },
+    {
+      "concept_id": "SB-C-STUDY",
+      "concept_label": "Study",
+      "language": "ASL",
+      "sign_id": "ASL-S-STUDY",
+      "gloss": "STUDY",
+      "english_forms": [
+        "study",
+        "studying",
+        "studied"
+      ],
+      "video_file": "study.mp4"
+    },
+    {
+      "concept_id": "SB-C-SURPRISE",
+      "concept_label": "Surprise",
+      "language": "ASL",
+      "sign_id": "ASL-S-SURPRISE",
+      "gloss": "SURPRISE",
+      "english_forms": [
+        "surprise",
+        "surprised",
+        "surprising"
+      ],
+      "video_file": "surprise.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-TEACHER",
+      "concept_label": "Teacher",
+      "language": "ASL",
+      "sign_id": "ASL-S-TEACHER",
+      "gloss": "TEACHER",
+      "english_forms": [
+        "teacher",
+        "teachers"
+      ],
+      "video_file": "teacher.mp4"
+    },
+    {
+      "concept_id": "SB-C-THANK",
+      "concept_label": "Thank",
+      "language": "ASL",
+      "sign_id": "ASL-S-THANK",
+      "gloss": "THANK",
+      "english_forms": [
+        "thank",
+        "thanks",
+        "thankyou"
+      ],
+      "video_file": "thank.mp4"
+    },
+    {
+      "concept_id": "SB-C-THEY",
+      "concept_label": "They",
+      "language": "ASL",
+      "sign_id": "ASL-S-THEY",
+      "gloss": "THEY",
+      "english_forms": [
+        "they",
+        "their",
+        "them"
+      ],
+      "video_file": "they.mp4"
+    },
+    {
+      "concept_id": "SB-C-TODAY",
+      "concept_label": "Today",
+      "language": "ASL",
+      "sign_id": "ASL-S-TODAY",
+      "gloss": "TODAY",
+      "english_forms": [
+        "today"
+      ],
+      "video_file": "today.mp4"
+    },
+    {
+      "concept_id": "SB-C-TOMORROW",
+      "concept_label": "Tomorrow",
+      "language": "ASL",
+      "sign_id": "ASL-S-TOMORROW",
+      "gloss": "TOMORROW",
+      "english_forms": [
+        "tomorrow"
+      ],
+      "video_file": "tomorrow.mp4"
+    },
+    {
+      "concept_id": "SB-C-TURN",
+      "concept_label": "Turn",
+      "language": "ASL",
+      "sign_id": "ASL-S-TURN",
+      "gloss": "TURN",
+      "english_forms": [
+        "turn",
+        "turning",
+        "turned"
+      ],
+      "video_file": "turn.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-UNDERSTAND",
+      "concept_label": "Understand",
+      "language": "ASL",
+      "sign_id": "ASL-S-UNDERSTAND",
+      "gloss": "UNDERSTAND",
+      "english_forms": [
+        "understand",
+        "understanding",
+        "understood"
+      ],
+      "video_file": "understand.mp4"
+    },
+    {
+      "concept_id": "SB-C-WANT",
+      "concept_label": "Want",
+      "language": "ASL",
+      "sign_id": "ASL-S-WANT",
+      "gloss": "WANT",
+      "english_forms": [
+        "want",
+        "wanting",
+        "wanted"
+      ],
+      "video_file": "want.mp4"
+    },
+    {
+      "concept_id": "SB-C-WE",
+      "concept_label": "We",
+      "language": "ASL",
+      "sign_id": "ASL-S-WE",
+      "gloss": "WE",
+      "english_forms": [
+        "we",
+        "our",
+        "us"
+      ],
+      "video_file": "we.mp4"
+    },
+    {
+      "concept_id": "SB-C-WELCOME",
+      "concept_label": "Welcome",
+      "language": "ASL",
+      "sign_id": "ASL-S-WELCOME",
+      "gloss": "WELCOME",
+      "english_forms": [
+        "welcome"
+      ],
+      "video_file": "welcome.mp4"
+    },
+    {
+      "concept_id": "SB-C-WHAT",
+      "concept_label": "What",
+      "language": "ASL",
+      "sign_id": "ASL-S-WHAT",
+      "gloss": "WHAT",
+      "english_forms": [
+        "what"
+      ],
+      "video_file": "what.mp4"
+    },
+    {
+      "concept_id": "SB-C-WHATS-UP",
+      "concept_label": "Whats Up",
+      "language": "ASL",
+      "sign_id": "ASL-S-WHATS-UP",
+      "gloss": "WHATS_UP",
+      "english_forms": [
+        "what's up",
+        "what is up"
+      ],
+      "video_file": "what's-up.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-WHEN",
+      "concept_label": "When",
+      "language": "ASL",
+      "sign_id": "ASL-S-WHEN",
+      "gloss": "WHEN",
+      "english_forms": [
+        "when"
+      ],
+      "video_file": "when.mp4"
+    },
+    {
+      "concept_id": "SB-C-WHERE",
+      "concept_label": "Where",
+      "language": "ASL",
+      "sign_id": "ASL-S-WHERE",
+      "gloss": "WHERE",
+      "english_forms": [
+        "where"
+      ],
+      "video_file": "where.mp4"
+    },
+    {
+      "concept_id": "SB-C-WHO",
+      "concept_label": "Who",
+      "language": "ASL",
+      "sign_id": "ASL-S-WHO",
+      "gloss": "WHO",
+      "english_forms": [
+        "who"
+      ],
+      "video_file": "who.mp4"
+    },
+    {
+      "concept_id": "SB-C-WHY",
+      "concept_label": "Why",
+      "language": "ASL",
+      "sign_id": "ASL-S-WHY",
+      "gloss": "WHY",
+      "english_forms": [
+        "why"
+      ],
+      "video_file": "why.mp4"
+    },
+    {
+      "concept_id": "SB-C-WORK",
+      "concept_label": "Work",
+      "language": "ASL",
+      "sign_id": "ASL-S-WORK",
+      "gloss": "WORK",
+      "english_forms": [
+        "work",
+        "working",
+        "worked"
+      ],
+      "video_file": "work.mp4"
+    },
+    {
+      "concept_id": "SB-C-WORKER",
+      "concept_label": "Worker",
+      "language": "ASL",
+      "sign_id": "ASL-S-WORKER",
+      "gloss": "WORKER",
+      "english_forms": [
+        "worker",
+        "workers"
+      ],
+      "video_file": "worker.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-WORKSHOP",
+      "concept_label": "Workshop",
+      "language": "ASL",
+      "sign_id": "ASL-S-WORKSHOP",
+      "gloss": "WORKSHOP",
+      "english_forms": [
+        "workshop",
+        "workshops"
+      ],
+      "video_file": "workshop.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-WRONG",
+      "concept_label": "Wrong",
+      "language": "ASL",
+      "sign_id": "ASL-S-WRONG",
+      "gloss": "WRONG",
+      "english_forms": [
+        "wrong"
+      ],
+      "video_file": "wrong.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    },
+    {
+      "concept_id": "SB-C-YES",
+      "concept_label": "Yes",
+      "language": "ASL",
+      "sign_id": "ASL-S-YES",
+      "gloss": "YES",
+      "english_forms": [
+        "yes"
+      ],
+      "video_file": "yes.mp4"
+    },
+    {
+      "concept_id": "SB-C-YESTERDAY",
+      "concept_label": "Yesterday",
+      "language": "ASL",
+      "sign_id": "ASL-S-YESTERDAY",
+      "gloss": "YESTERDAY",
+      "english_forms": [
+        "yesterday"
+      ],
+      "video_file": "yesterday.mp4"
+    },
+    {
+      "concept_id": "SB-C-YOU",
+      "concept_label": "You",
+      "language": "ASL",
+      "sign_id": "ASL-S-YOU",
+      "gloss": "YOU",
+      "english_forms": [
+        "you",
+        "yours"
+      ],
+      "video_file": "you.mp4"
+    },
+    {
+      "concept_id": "SB-C-YOUR",
+      "concept_label": "Your",
+      "language": "ASL",
+      "sign_id": "ASL-S-YOUR",
+      "gloss": "YOUR",
+      "english_forms": [
+        "your"
+      ],
+      "video_file": "your.mp4",
+      "source_name": "ASL Signbank",
+      "source_url": null,
+      "attribution": null,
+      "license": null
+    }
+  ]
+}

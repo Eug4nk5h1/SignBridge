@@ -2832,3 +2832,347 @@ button:focus-visible {
 .single-video-container.video-transitioning video {
   opacity: 0;
 }
+
+.processing-message,
+.app-error,
+.unresolved-notice {
+  max-width: 720px;
+  margin: 18px auto;
+  padding: 12px 16px;
+  border-radius: 12px;
+  line-height: 1.5;
+}
+
+.processing-message {
+  color: #c7d2fe;
+  background: rgba(99, 102, 241, 0.12);
+}
+
+.app-error,
+.unresolved-notice {
+  color: #fecaca;
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.gloss-summary {
+  width: min(100%, 760px);
+  margin: 22px auto 10px;
+  text-align: center;
+}
+
+.transcript-summary {
+  width: min(100%, 760px);
+  margin: 18px auto 8px;
+  padding: 14px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.045);
+  text-align: center;
+}
+
+.transcript-summary strong {
+  color: #a5a5b2;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.transcript-summary p {
+  margin: 9px 0 0;
+  color: #f4f4f8;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.gloss-summary > strong {
+  display: block;
+  margin-bottom: 12px;
+  color: #a5a5b2;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+}
+
+.gloss-summary > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.gloss-chip {
+  padding: 7px 11px;
+  border: 1px solid rgba(167, 139, 250, 0.38);
+  border-radius: 999px;
+  color: #e9ddff;
+  background: rgba(139, 92, 246, 0.14);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.mapping-details {
+  width: min(100%, 760px);
+  margin: 10px auto 24px;
+  color: #c6c6d0;
+  font-size: 13px;
+}
+
+.mapping-details summary {
+  cursor: pointer;
+  text-align: center;
+}
+
+.mapping-list {
+  display: grid;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.mapping-row {
+  display: grid;
+  grid-template-columns: 0.7fr 1.2fr 1.2fr 0.8fr;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  overflow-wrap: anywhere;
+}
+
+.mapping-row strong {
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .mapping-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Keep the output usable on short and narrow screens. The player comes
+   before the expandable technical mapping, and the main column can scroll. */
+.app {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100svh;
+}
+
+.output-page {
+  width: min(100%, 1250px);
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  flex: 1 1 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding: clamp(10px, 2vh, 20px) clamp(14px, 4vw, 36px) 28px;
+  scroll-padding-block: 16px;
+}
+
+.output-page .page-label {
+  margin-bottom: 6px;
+}
+
+.output-page h2 {
+  font-size: clamp(1.8rem, 4.5vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.output-page .page-description {
+  width: min(100%, 760px);
+  margin-top: 7px;
+  font-size: clamp(0.82rem, 1.5vw, 0.98rem);
+  line-height: 1.45;
+}
+
+.transcript-summary {
+  margin: 12px auto 6px;
+  padding: 10px 14px;
+}
+
+.transcript-summary p {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+}
+
+.gloss-summary {
+  margin: 10px auto 4px;
+}
+
+.gloss-summary > strong {
+  margin-bottom: 7px;
+}
+
+.gloss-chip {
+  padding: 6px 10px;
+}
+
+.unresolved-notice {
+  margin: 8px auto;
+  padding: 9px 12px;
+  font-size: 0.85rem;
+}
+
+.single-sign-view {
+  width: min(100%, 620px);
+  margin-top: 12px;
+}
+
+.single-video-container {
+  width: min(100%, 620px, 88svh);
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  transition:
+    opacity 320ms ease,
+    transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.single-video-container video {
+  opacity: 1;
+  transform: scale(1);
+  filter: blur(0);
+  transition:
+    opacity 320ms ease,
+    transform 420ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    filter 320ms ease;
+}
+
+.single-video-container.video-transitioning {
+  opacity: 0.72;
+  transform: scale(0.985);
+}
+
+.single-video-container.video-transitioning video {
+  opacity: 0;
+  transform: scale(0.97);
+  filter: blur(3px);
+}
+
+.single-video-container .video-side-label,
+.single-video-container .playing-indicator {
+  transition: opacity 220ms ease, transform 300ms ease;
+}
+
+.single-video-container.video-transitioning .video-side-label,
+.single-video-container.video-transitioning .playing-indicator {
+  opacity: 0;
+  transform: translateY(5px);
+}
+
+.output-page .mapping-details {
+  margin: 12px auto 0;
+  padding-top: 8px;
+}
+
+.pipeline-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.pipeline-step {
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.035);
+  overflow-wrap: anywhere;
+}
+
+.pipeline-step strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+.pipeline-step p,
+.pipeline-step small {
+  display: block;
+  margin: 3px 0 0;
+  color: #c6c6d0;
+  line-height: 1.5;
+}
+
+.pipeline-step .semantic-trace-row {
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.output-page .output-actions {
+  flex-wrap: wrap;
+  margin-top: 12px;
+  gap: 9px;
+}
+
+@media (max-width: 600px) {
+  .page-top {
+    height: 52px;
+    padding-inline: 16px;
+  }
+
+  .output-page {
+    padding-inline: 14px;
+  }
+
+  .single-sign-view {
+    margin-top: 10px;
+  }
+
+  .single-video-container {
+    width: min(100%, 88svh);
+    border-radius: 12px;
+  }
+
+  .video-progress {
+    right: 12px;
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+
+  .output-page .output-actions {
+    width: 100%;
+  }
+
+  .output-page .output-actions button {
+    max-width: 100%;
+  }
+
+  .steps {
+    min-height: 48px;
+    height: auto;
+    gap: clamp(4px, 2vw, 10px);
+    padding: 8px 6px;
+  }
+
+  .step-line {
+    width: clamp(8px, 4vw, 20px);
+  }
+}
+
+@media (max-height: 650px) {
+  .output-page {
+    padding-top: 8px;
+    padding-bottom: 18px;
+  }
+
+  .transcript-summary {
+    margin-top: 7px;
+    padding-block: 7px;
+  }
+
+  .single-sign-view {
+    margin-top: 7px;
+  }
+
+  .output-page .output-actions {
+    margin-top: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .single-video-container,
+  .single-video-container video,
+  .single-video-container .video-side-label,
+  .single-video-container .playing-indicator {
+    transition-duration: 1ms;
+  }
+}

@@ -58,17 +58,17 @@ SIGN_VOCABULARY = {
 
 WORD_MAPPINGS = {
     # Possessives
-    "my": "I",
+    "my": "MY",
     "mine": "I",
-    "your": "YOU",
+    "your": "YOUR",
     "yours": "YOU",
     "our": "WE",
     "their": "THEY",
-    "his": "HE",
+    "his": "HIS",
     "her": "SHE",
 
     # Object pronouns
-    "me": "I",
+    "me": "ME",
     "him": "HE",
     "us": "WE",
     "them": "THEY",
@@ -145,6 +145,8 @@ WORD_MAPPINGS = {
     "not": "NO",
     "n't": "NO",
     "n’t": "NO",
+    "'s": "BE",
+    "’s": "BE",
     "cannot": "NO",
     "yes": "YES",
 
@@ -161,11 +163,12 @@ WORD_MAPPINGS = {
 
 SUPPORT_WORDS = {
     "a", "an", "the",
-    "and", "or", "but",
+    "and", "or",
     "to", "of", "for",
     "in", "on", "at",
     "with", "from", "by",
     "be", "been", "being",
+    "'s", "’s",
     "is", "are", "am",
     "was", "were",
     "do", "does", "did",
@@ -194,6 +197,9 @@ def analyze_sentence(sentence):
         "location": None,
         "time": None,
         "keywords": [],
+        "tokens": [],
+        "semantic_tokens": [],
+        "context_words": [],
     }
 
     # ==================================================
@@ -226,42 +232,46 @@ def analyze_sentence(sentence):
 
     for token in doc:
 
-        # Ignore punctuation
+        # Ignore punctuation in the lexical sequence, but keep the grammatical
+        # and semantic properties of every word for the later pipeline stages.
         if token.is_punct or token.is_space:
             continue
 
         original_word = token.text.lower()
+        normalized_word = (
+            token.lemma_.lower()
+            if token.pos_ == "VERB"
+            else original_word
+        )
+        token_info = {
+            "surface": token.text,
+            "lemma": normalized_word,
+            "pos": token.pos_,
+            "dependency": token.dep_,
+            "head": token.head.lemma_.lower(),
+            "entity_type": token.ent_type_ or None,
+            "is_support_word": normalized_word in SUPPORT_WORDS,
+        }
+        result["tokens"].append(token_info)
+        result["context_words"].append(normalized_word)
 
-        # Normalize verb forms using spaCy lemmatization
-        if token.pos_ == "VERB":
-            normalized_word = token.lemma_.lower()
-        else:
-            normalized_word = original_word
-
-        # Question words
-        if normalized_word in QUESTION_WORDS:
-            result["keywords"].append(normalized_word.upper())
-            continue
-
-        # Explicit word mappings
-        if normalized_word in WORD_MAPPINGS:
-            result["keywords"].append(
-                WORD_MAPPINGS[normalized_word]
-            )
-            continue
-
-        # Skip English grammatical/support words
         if normalized_word in SUPPORT_WORDS:
             continue
 
-        # Include words with available sign videos
-        if normalized_word in SIGN_VOCABULARY:
-            result["keywords"].append(
-                normalized_word.upper()
-            )
+        if normalized_word in QUESTION_WORDS:
+            gloss_candidate = normalized_word.upper()
+        elif normalized_word in WORD_MAPPINGS:
+            gloss_candidate = WORD_MAPPINGS[normalized_word]
         else:
-            # Keep unsupported content visible so the backend can mark its video missing.
-            result["keywords"].append(normalized_word.upper())
+            # Preserve unknown content so semantic mapping can consider it and,
+            # if no suitable concept exists, report it as unresolved.
+            gloss_candidate = normalized_word.upper()
+
+        result["keywords"].append(gloss_candidate)
+        result["semantic_tokens"].append({
+            **token_info,
+            "candidate_gloss": gloss_candidate,
+        })
 
     # ==================================================
     # SENTENCE STRUCTURE

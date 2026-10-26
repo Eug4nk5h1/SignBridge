@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Mic,
   ArrowRight,
   RotateCcw,
   Play,
-  Check,
   Square,
 } from "lucide-react";
 import "./App.css";
@@ -15,6 +14,8 @@ function App() {
   const [screen, setScreen] = useState("intro");
 
   const [listening, setListening] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [recognizedText, setRecognizedText] = useState("");
 
   const [translationData, setTranslationData] = useState(null);
@@ -30,6 +31,8 @@ function App() {
     useState("english");
 
   const [understandingWords, setUnderstandingWords] =
+    useState([]);
+  const [normalizedWords, setNormalizedWords] =
     useState([]);
 
   const [sequencePlaying, setSequencePlaying] = useState(false);
@@ -64,10 +67,18 @@ function App() {
   ========================= */
 
   const startListening = async () => {
+    setErrorMessage("");
     try {
+      if (!navigator.mediaDevices?.getUserMedia) {
+        throw new Error("Microphone access is not available in this browser.");
+      }
       const stream =
         await navigator.mediaDevices.getUserMedia({
-          audio: true,
+          audio: {
+            noiseSuppression: { ideal: true },
+            echoCancellation: { ideal: true },
+            autoGainControl: { ideal: true },
+          },
         });
 
       const recorder = new MediaRecorder(stream);
@@ -83,6 +94,7 @@ function App() {
 
       recorder.onstop = async () => {
         setListening(false);
+        setProcessing(true);
 
         stream
           .getTracks()
@@ -113,9 +125,8 @@ function App() {
           );
 
           if (!response.ok) {
-            throw new Error(
-              "Backend request failed"
-            );
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.detail || "Translation request failed.");
           }
 
           const data = await response.json();
@@ -133,9 +144,9 @@ function App() {
             error
           );
 
-          alert(
-            "Could not connect to SignBridge AI backend."
-          );
+          setErrorMessage(error.message || "Could not connect to the SignBridge backend.");
+        } finally {
+          setProcessing(false);
         }
       };
 
@@ -150,9 +161,7 @@ function App() {
         error
       );
 
-      alert(
-        "Microphone access was denied or is unavailable."
-      );
+      setErrorMessage(error.message || "Microphone access was denied or is unavailable.");
     }
   };
 
@@ -169,6 +178,7 @@ function App() {
     setRecognizedText("");
     setTranslationData(null);
     setUnderstandingWords([]);
+    setNormalizedWords([]);
     setUnderstandingStage("english");
 
     startListening();
@@ -199,70 +209,16 @@ function App() {
 
     clearAnimationTimers();
 
-    /*
-      Use the REAL sentence returned by Whisper.
-    */
     const words = recognizedText
       .replace(/[.,!?;:]/g, "")
       .split(/\s+/)
       .filter(Boolean);
+    const mappedGlosses = translationData.sign_sequence || [];
 
-    /*
-      Backend translation result.
-
-      Example:
-
-      English:
-      "Hello I am going to college"
-
-      ASL:
-      ["HELLO", "I", "GO", "COLLEGE"]
-    */
-    const aslSequence =
-      translationData.sign_sequence || [];
-
-    /*
-      Words that actually survive the AI
-      translation.
-
-      We compare the normalized English words
-      against the ASL sequence.
-    */
-    const meaningfulWords = [];
-
-    words.forEach((word) => {
-      const normalized = word.toUpperCase();
-
-      const existsInASL =
-        aslSequence.includes(normalized);
-
-      /*
-        Special English → ASL mappings.
-        These allow words such as "going"
-        to visually become "GO".
-      */
-      const lemmaMatch =
-        normalized === "GOING" &&
-        aslSequence.includes("GO");
-
-      const shouldKeep =
-        existsInASL || lemmaMatch;
-
-      meaningfulWords.push({
-        english: word,
-        normalized,
-        keep: shouldKeep,
-      });
-    });
-
-    /*
-      If the backend generated signs that do not
-      exactly match the English words, the animation
-      still has a meaningful filtering stage.
-    */
     setUnderstandingWords(
-      meaningfulWords
+      words.map((word) => ({ english: word, keep: true }))
     );
+    setNormalizedWords(mappedGlosses);
 
     setUnderstandingStage("english");
 
@@ -303,19 +259,19 @@ function App() {
      ASL VIDEO PLAYBACK
   ========================= */
 
-  const getAvailableSigns = () => {
+  const getAvailableSigns = useCallback(() => {
     if (!translationData) {
       return [];
     }
 
     return translationData.signs || [];
-  };
+  }, [translationData]);
 
-  const getPlayableSigns = () => {
+  const getPlayableSigns = useCallback(() => {
     return getAvailableSigns().filter(
       (sign) => sign.found && sign.video
     );
-  };
+  }, [getAvailableSigns]);
 
   const startASL = () => {
     const available = getPlayableSigns();
@@ -324,6 +280,7 @@ function App() {
       return;
     }
 
+    setVideoTransitioning(false);
     setCurrentSignIndex(0);
     setSequencePlaying(true);
   };
@@ -342,7 +299,6 @@ function App() {
 
       sequenceTimerRef.current = setTimeout(() => {
         setCurrentSignIndex(nextIndex);
-        setVideoTransitioning(false);
       }, 350);
 
       return;
@@ -382,7 +338,7 @@ function App() {
 
     playVideo();
 
-  }, [currentSignIndex, sequencePlaying]);
+  }, [currentSignIndex, getPlayableSigns, sequencePlaying]);
 
   const stopASL = () => {
     if (sequenceTimerRef.current) {
@@ -400,6 +356,7 @@ function App() {
 
     setSequencePlaying(false);
     setCurrentSignIndex(0);
+    setVideoTransitioning(false);
   };
 
   const newTranslation = () => {
@@ -410,6 +367,7 @@ function App() {
     setRecognizedText("");
     setTranslationData(null);
     setUnderstandingWords([]);
+    setNormalizedWords([]);
     setUnderstandingStage("english");
 
     setScreen("speak");
@@ -433,7 +391,7 @@ function App() {
         <div className="intro-divider"></div>
 
         <p>
-          Speech → American Sign Language
+          Speech → curated ASL glosses
         </p>
       </div>
     );
@@ -476,10 +434,15 @@ function App() {
           <p className="page-description">
             {listening
               ? "SignBridge is listening to you."
-              : "Speak in English and SignBridge will transform your speech into American Sign Language."}
+              : processing
+                ? "Transcribing speech and matching available sign resources…"
+                : "Speak English to create a curated ASL gloss sequence with matching sign videos."}
           </p>
 
-          {!recognizedText &&
+          {processing && <p className="processing-message" role="status">Processing your recording…</p>}
+          {errorMessage && <p className="app-error" role="alert">{errorMessage}</p>}
+
+          {!recognizedText && !processing &&
             !listening && (
               <>
                 <div className="mic-container">
@@ -502,7 +465,7 @@ function App() {
                 </div>
 
                 <div className="small-text">
-                  Speak clearly in English
+                  Speak clearly in English. Noise reduction is used when supported by your browser.
                 </div>
               </>
             )}
@@ -636,27 +599,14 @@ function App() {
           </h2>
 
           <p className="page-description">
-            SignBridge identifies the meaningful
-            parts of your sentence and prepares
-            them for ASL.
+            Review the sentence analysis, meaning matches, controlled ASL rules, and available sign clips.
           </p>
 
           <div className="sentence-area">
 
             <div className="sentence-label">
-              AI LANGUAGE TRANSFORMATION
+              ANALYSIS AND ASL GLOSS MAPPING
             </div>
-
-            {/*
-              THIS IS THE IMPORTANT PART.
-
-              There is ONLY ONE word container.
-
-              English → filtering → ASL
-
-              We are NOT creating a separate
-              ASL preview underneath.
-            */}
 
             <div
               className={`word-container transformation-stage-${understandingStage}`}
@@ -678,9 +628,18 @@ function App() {
                   )
                 )}
 
+              {understandingStage === "filtering" &&
+                normalizedWords.map((sign, index) => (
+                    <span
+                      key={`${sign}-${index}`}
+                      className="word word-asl"
+                    >
+                      {sign}
+                    </span>
+                  ))}
+
               {understandingStage === "asl" &&
-                (translationData?.sign_sequence ||
-                  []).map(
+                (translationData?.sign_sequence || []).map(
                   (sign, index) => (
                     <span
                       key={`${sign}-${index}`}
@@ -710,8 +669,8 @@ function App() {
                 ? "READING SENTENCE"
                 : understandingStage ===
                   "filtering"
-                ? "IDENTIFYING MEANING"
-                : "ASL REPRESENTATION"}
+                ? "APPLYING CURATED RULES"
+                : "FINAL GLOSS SEQUENCE"}
             </span>
 
             <div></div>
@@ -772,6 +731,7 @@ const availableSigns = signs.filter(
     sign.found &&
     sign.video
 );
+const unresolvedSigns = signs.filter((sign) => !sign.found);
 
 const currentSign =
   availableSigns[currentSignIndex];
@@ -809,7 +769,7 @@ return (
     <main className="output-page">
 
       <div className="page-label">
-        ASL OUTPUT
+        SEQUENTIAL SIGN OUTPUT
       </div>
 
 
@@ -821,6 +781,26 @@ return (
           ready.
         </span>
       </h2>
+
+      <p className="page-description">
+        Resolved clips play in sequence. The pipeline shows how each word was analyzed and matched; its controlled gloss rules are not fluent ASL grammar.
+      </p>
+
+      <div className="transcript-summary" aria-label="Recognized English transcript">
+        <strong>RECOGNIZED ENGLISH</strong>
+        <p>{recognizedText || "No transcript is available."}</p>
+      </div>
+
+      <div className="gloss-summary" aria-label="Curated gloss sequence">
+        <strong>GLOSS SEQUENCE</strong>
+        <div>{(translationData?.sign_sequence || []).map((gloss, index) => <span className="gloss-chip" key={`${gloss}-${index}`}>{gloss}</span>)}</div>
+      </div>
+
+      {unresolvedSigns.length > 0 && (
+        <p className="unresolved-notice" role="status">
+          No sign video is available for: {unresolvedSigns.map((sign) => sign.gloss || sign.word).join(", " )}. These terms are omitted from playback.
+        </p>
+      )}
 
       {/* =========================
           SINGLE SIGN
@@ -860,6 +840,14 @@ return (
               preload="auto"
 
               controls={false}
+
+              onLoadedData={() => {
+                if (sequencePlaying) {
+                  setVideoTransitioning(false);
+                }
+              }}
+
+              onError={() => setVideoTransitioning(false)}
 
               onEnded={
                 handleVideoEnded
@@ -981,6 +969,64 @@ return (
         )}
 
       </div>
+
+      <details className="mapping-details pipeline-details">
+        <summary>View the algorithm steps</summary>
+        <div className="pipeline-list">
+          <section className="pipeline-step">
+            <strong>1. Speech recognition</strong>
+            <p>{translationData?.text || recognizedText || "No recognized sentence."}</p>
+          </section>
+          <section className="pipeline-step">
+            <strong>2. Text and grammar analysis</strong>
+            <p>{(translationData?.analysis?.tokens || []).map((token) => `${token.surface} (${token.pos || "word"}${token.dependency ? `, ${token.dependency}` : ""})`).join(" · ") || "No token analysis available."}</p>
+            <small>Sentence type: {translationData?.analysis?.sentence_type || "unknown"}</small>
+          </section>
+          <section className="pipeline-step">
+            <strong>3. Lexical normalization</strong>
+            <p>{(translationData?.analysis?.keywords || []).join(" → ") || "No normalized glosses available."}</p>
+          </section>
+          <section className="pipeline-step">
+            <strong>4. Contextual meaning and synonym matching</strong>
+            <p>Resource: {translationData?.semantic_mapping?.semantic_resource || "unknown"}</p>
+            {(translationData?.semantic_mapping?.trace || []).map((item, index) => (
+              <small className="semantic-trace-row" key={`${item.input}-${index}`}>
+                {item.input} → {item.resolved_gloss || `unresolved (${(item.candidate_concepts || []).join(", ") || "no catalog candidate"})`} · {item.method}
+                {item.confidence ? ` · ${(item.confidence * 100).toFixed(0)}%` : ""}
+              </small>
+            ))}
+          </section>
+          <section className="pipeline-step">
+            <strong>5. Target-language transformation</strong>
+            <p>{translationData?.target_transformation?.rule_set || "Controlled ASL rules"}: {(translationData?.target_transformation?.sequence || translationData?.sign_sequence || []).join(" → ")}</p>
+            {(translationData?.target_transformation?.limitations || []).map((item, index) => (
+              <small key={`limit-${index}`}>{item}</small>
+            ))}
+          </section>
+          <section className="pipeline-step">
+            <strong>6. Concept, sign, and resource resolution</strong>
+            <p>{(translationData?.signs || []).map((sign) => `${sign.gloss}: ${sign.status}`).join(" · ") || "No resource checks available."}</p>
+          </section>
+          <section className="pipeline-step">
+            <strong>7. Visual output</strong>
+            <p>Available sign videos play in order; unresolved words and unavailable clips remain visible in the mapping.</p>
+          </section>
+        </div>
+      </details>
+
+      <details className="mapping-details">
+        <summary>View concept and resource mapping</summary>
+        <div className="mapping-list">
+          {signs.map((sign, index) => (
+            <div className="mapping-row" key={`${sign.gloss || sign.word}-${index}`}>
+              <strong>{sign.gloss || sign.word}</strong>
+              <span>{sign.concept_id || "No concept ID"}</span>
+              <span>{sign.sign_id || "No sign ID"}</span>
+              <span>{sign.status || (sign.found ? "resolved" : "unresolved")}</span>
+            </div>
+          ))}
+        </div>
+      </details>
 
     </main>
 

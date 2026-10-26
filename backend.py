@@ -76,7 +76,12 @@ async def translate(file: UploadFile = File(...)):
                 if video_path
                 else None
             ),
-            "found": video_path is not None
+            "found": video_path is not None,
+            "message": (
+                "Video available"
+                if video_path
+                else "No video available (working on it)"
+            )
         })
 
     return {
